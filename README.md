@@ -10,6 +10,18 @@ The project aims to build a feature-rich e-commerce application using modern too
     * Install and configure DaisyUI for Tailwind CSS components.
     * Set up Storybook for component-driven development.
     * Create skeletons or stubs for all planned components.
+        **Components**
+        - Navbar
+        - Footer
+        - Button
+        - Loader
+        - Toast
+        - ProductCard
+        - CartItem
+        - CartSummary
+        
+        **Screenshot of Storybook**
+        ![screenshot of storybook](</public/storybook1.png>)
     * Connect the application to the database.
     * Prepare an initial README.md documenting setup instructions.
 
