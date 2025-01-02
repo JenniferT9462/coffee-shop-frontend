@@ -1,40 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# coffee-shop-frontend
 
-## Getting Started
+# Project Overview: Full-Stack E-Commerce Application
+## Objective:
+The project aims to build a feature-rich e-commerce application using modern tools and libraries, focusing on usability, scalability, and maintainability.
+## Development Plan
+### Day 1: Project Setup
+- Goals:
+    * Set up the project structure using Next.js.
+    * Install and configure DaisyUI for Tailwind CSS components.
+    * Set up Storybook for component-driven development.
+    * Create skeletons or stubs for all planned components.
+    * Connect the application to the database.
+    * Prepare an initial README.md documenting setup instructions.
 
-First, run the development server:
+- Key Deliverables:
+    * A functional Next.js app with DaisyUI and Storybook integrated.
+    * Basic database connectivity.
+    * A well-documented README for onboarding.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Day 2: Component and Form Development
+- Goals:
+    * Build the core UI components and forms needed for user interaction.
+    * Use useState for managing component-level state.
+    * Focus on reusable and modular components.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Key Deliverables:
+    * Functional and styled UI components.
+    * Dynamic forms for login, signup, and product management.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Day 3: API Integration and Prop Management
+- Goals:
+    * Create and test non-authenticated API endpoints (API v1).
+    * Implement useQuery for efficient data fetching.
+    * Set up prop passing and drilling for key features:
+        - Login/Logout functionality.
+        - Add to Cart/Remove from Cart.
+        - Product management: Create, Update, Delete, List, and Show products.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Key Deliverables:
+    * Working API v1 endpoints.
+    * Basic product and user interactions integrated with the UI.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Day 4: Authentication and API v2
+- Goals:
+    * Develop an Auth Provider Context to manage user authentication.
+    * Build and test authenticated API endpoints (API v2) for secure operations.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Key Deliverables:
+    * Authenticated routes and operations.
+    * Context-based authentication handling in the app.
 
-## Learn More
+### Day 5: Shopping Cart Feature
+- Goals:
+    * Build a shopping cart sidebar/popup for user-friendly cart interactions.
+    * Ensure seamless integration with the cart functionality implemented on Day 3.
 
-To learn more about Next.js, take a look at the following resources:
+- Key Deliverables:
+    * Interactive shopping cart with add/remove item functionality.
+    * Fully integrated shopping cart experience.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Key Tools & Technologies
+- Frontend: Next.js, DaisyUI, Storybook, React Hooks (useState, useQuery)
+- Backend: Node.js, API v1 (non-auth) and API v2 (auth)
+- Database: (Database type to be decided: e.g., MongoDB, PostgreSQL)
+- Version Control: Git/GitHub
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Expected Outcome
+By the end of Day 5, the project will be a fully functional e-commerce application with:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- Modular and reusable components.
+- Secure and efficient API endpoints.
+- A user-friendly shopping cart.
+- A robust authentication system.
