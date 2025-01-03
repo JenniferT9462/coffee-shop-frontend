@@ -13,5 +13,22 @@ export default {
       },
     },
   },
+  daisyui: {
+    themes: [
+      {
+        coffeeShop: {
+          "primary": "#4ade80",
+          "secondary": "#8b5cf6",
+          "accent": "#0ea5e9",
+          "neutral": "#34d399",
+          "base-100": "#d9f99d",
+          "info": "#6366f1",
+          "success": "#84cc16",
+          "warning": "#eab308",
+          "error": "#e11d48",
+          },
+        },
+      ],
+    },
   plugins: [require("daisyui")],
 };
