@@ -19,7 +19,9 @@ The project aims to build a feature-rich e-commerce application using modern too
             ```bash
             npm run dev
     * Install and configure DaisyUI for Tailwind CSS components.
+        - Challenges: I can't figure out how to change the text color after using DaisyUi theme. I tried applying a color from my theme to the body in `global.css` I also tried just applying a text color to the body and nothing shows up. 
     * Set up Storybook for component-driven development.
+        - Made stories for the different components in Storybook. 
     * Create skeletons or stubs for all planned components.
         **Components**
         - Navbar
