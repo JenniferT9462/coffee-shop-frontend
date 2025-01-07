@@ -16,19 +16,19 @@ This is a project to build a frontend for a coffee shop. The project will includ
 
 ## Components
 
-- [ ] Navbar
-- [ ] Footer
-- [ ] Button
-- [ ] Loader
-- [ ] Toast
-- [ ] ProductCard
-- [ ] CartItem
-- [ ] CartSummary
+- [x] Navbar
+- [x] Footer
+- [x] Button
+- [x] Loader
+- [x] Toast
+- [x] ProductCard
+- [x] CartItem
+- [x] CartSummary
 
 ## Features
-- [ ] Tailwind CSS with DaisyUI integration.
-- [ ] Storybook for component development.
-- [ ] Component stubs for all components.
+- [x] Tailwind CSS with DaisyUI integration.
+- [x] Storybook for component development.
+- [x] Component stubs for all components.
 
 ## Setup
 If you would like to try this project out or contribute, follow these steps:
