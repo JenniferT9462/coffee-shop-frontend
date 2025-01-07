@@ -12,3 +12,11 @@ export const Default = {
     totalPrice: "23.67"
   }
 };
+
+export const WithTitle = {
+  args: {
+    totalItems: "4",
+    totalPrice: "23.67",
+    title: "Items in your Cart:"
+  }
+};
