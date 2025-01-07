@@ -9,11 +9,13 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <div className="card max-w-sm rounded overflow-hidden shadow-lg bg-white border">
-      <img src={product.imageUrl} alt={product.name} />
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-      <p>${product.price}</p>
+    <div className="flex flex-col bg-white border rounded-lg shadow-md p-4 h-full">
+      <img src={product.imageUrl} alt={product.name} className="w-full h-48 object-cover rounded-t-lg" />
+      <div>
+        <h3 className="text-xl font-semibold">{product.name}</h3>
+        <p>{product.description}</p>
+        <p>${product.price}</p>
+      </div>
       <Button label="Add to Cart" />
     </div>
   );
