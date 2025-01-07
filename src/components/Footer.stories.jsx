@@ -11,3 +11,9 @@ export const Default = {
     title: "Created @ Codex"
   }
 };
+
+export const Copyright = {
+  args: {
+    title: "Created @ Codex 2024"
+  }
+};

@@ -17,3 +17,15 @@ export const Secondary = {
     label: "Get Started"
   }
 };
+
+export const LogIn = {
+  args: {
+    label: "Log In"
+  }
+};
+
+export const SignUp = {
+  args: {
+    label: "Sign Up"
+  }
+};
