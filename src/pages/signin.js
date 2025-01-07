@@ -6,7 +6,7 @@ export default function signin() {
     return (
         <>
             <Header/>
-            <SignUpForm buttonLabel="Sign In" handleClick={()=>{console.log("clicked sign in")}}/>
+            <SignUpForm title="Sign In Now!" buttonLabel="Sign In" handleClick={()=>{console.log("clicked sign in")}}/>
             <Footer title={"Brew Haven 2024"}/>
         </>
     )

@@ -7,6 +7,7 @@ export default function signup() {
     <>
       <Header />
       <SignUpForm
+        title="Sign Up Now!"
         buttonLabel="Sign Up"
         handleClick={() => {
           console.log("clicked sign up");
