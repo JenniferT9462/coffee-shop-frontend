@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
-export default function Button({ label }) {
-  return <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{label}</button>;
+export default function Button({ label, handleClick }) {
+  return (
+    <button onClick={handleClick} className="btn btn-primary">
+      {label}
+    </button>
+  );
 }
 Button.propTypes = {
   label: PropTypes.string.isRequired,
