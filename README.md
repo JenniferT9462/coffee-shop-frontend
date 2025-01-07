@@ -5,6 +5,7 @@
 The project aims to build a feature-rich e-commerce application using modern tools and libraries, focusing on usability, scalability, and maintainability.
 ## Development Plan
 ## Day 1: Project Setup
+[Day 1](day-1.md)
 - Goals:
     * Set up the project structure using Next.js.
         **Setup**
