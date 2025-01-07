@@ -1,9 +1,18 @@
-import SignUpForm from "@/components/SignUpForm"
+import SignUpForm from "@/components/SignUpForm";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function signup() {
-    return (
-        <>
-            <SignUpForm />
-        </>
-    )
+  return (
+    <>
+      <Header />
+      <SignUpForm
+        buttonLabel="Sign Up"
+        handleClick={() => {
+          console.log("clicked sign up");
+        }}
+      />
+      <Footer title={"Brew Haven 2024"} />
+    </>
+  );
 }
