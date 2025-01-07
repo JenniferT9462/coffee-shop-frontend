@@ -7,13 +7,15 @@ const meta = {
 export default meta;
 
 export const Default = {
-  args: {
-    buttonLabel: "Sign Up"
+  args:{
+    buttonLabel:"Sign Up",
+    title:"Sign Up Now!"
   }
 };
 
 export const SignIn = {
   args: {
-    buttonLabel: "Sign In"
+    buttonLabel: "Sign In",
+    title: "Sign In Now!"
   }
 };

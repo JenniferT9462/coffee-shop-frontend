@@ -3,12 +3,6 @@ import Button from "./Button";
 
 export default function SignUpForm({ buttonLabel, title }) {
   return (
-    // <form className='form'>
-    //     <input type="text" placeholder="Name" />
-    //     <input type="email" placeholder="Email" />
-    //     <input type="password" placeholder="Password" />
-    //     <Button label={buttonLabel} handleClick={()=>{console.log("clicked sign up")}}/>
-    // </form>
     <div className="hero bg-base-100 min-h-screen text-primary">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
@@ -77,5 +71,6 @@ export default function SignUpForm({ buttonLabel, title }) {
 }
 
 SignUpForm.propTypes = {
+  title: PropTypes.string.isRequired,
   buttonLabel: PropTypes.string.isRequired,
 };
