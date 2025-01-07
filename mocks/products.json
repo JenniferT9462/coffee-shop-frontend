@@ -5,7 +5,7 @@
       "description": "Delicious muffins loaded with fresh blueberries.",
       "price": 3.5,
       "category": "Bakery",
-      "imageUrl": "/public/blueberryMuffin.jpg",
+      "imageUrl": "/blueberryMuffin.jpg",
       "stock": 15
     },
     {
@@ -14,7 +14,7 @@
       "description": "A savory bagel topped with a mix of seeds and spices.",
       "price": 2.5,
       "category": "Bakery",
-      "imageUrl": "/public/everythingBagel.jpg",
+      "imageUrl": "/everythingBagel.jpg",
       "stock": 20
     },
     {
@@ -23,7 +23,7 @@
       "description": "Freshly brewed coffee made from premium beans.",
       "price": 2.0,
       "category": "Beverages",
-      "imageUrl": "/public/coffee.jpg",
+      "imageUrl": "/coffee.jpg",
       "stock": 50
     },
     {
@@ -32,7 +32,7 @@
       "description": "Smooth espresso combined with steamed milk and a touch of foam.",
       "price": 4.0,
       "category": "Beverages",
-      "imageUrl": "/public/latte.jpg",
+      "imageUrl": "/latte.jpg",
       "stock": 25
     },
     {
@@ -41,7 +41,7 @@
       "description": "Classic espresso drink with steamed milk and frothy foam.",
       "price": 4.0,
       "category": "Beverages",
-      "imageUrl": "/public/cappuccino.jpg",
+      "imageUrl": "/cappuccino.jpg",
       "stock": 30
     },
     {
@@ -50,7 +50,7 @@
       "description": "Buttery and flaky French pastry, perfect for breakfast.",
       "price": 2.75,
       "category": "Bakery",
-      "imageUrl": "/public/croissant.jpg",
+      "imageUrl": "/croissant.jpg",
       "stock": 18
     },
     {
@@ -59,7 +59,7 @@
       "description": "Rich espresso mixed with chocolate syrup and steamed milk.",
       "price": 4.5,
       "category": "Beverages",
-      "imageUrl": "/public/mocha.jpg",
+      "imageUrl": "/mocha.jpg",
       "stock": 22
     },
     {
@@ -68,7 +68,7 @@
       "description": "A soothing cup of freshly brewed tea, available in various flavors.",
       "price": 2.5,
       "category": "Beverages",
-      "imageUrl": "/public/tea.jpg",
+      "imageUrl": "/tea.jpg",
       "stock": 40
     }
   ]
