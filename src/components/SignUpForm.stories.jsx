@@ -11,3 +11,9 @@ export const Default = {
     buttonLabel: "Sign Up"
   }
 };
+
+export const SignIn = {
+  args: {
+    buttonLabel: "Sign In"
+  }
+};
