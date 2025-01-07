@@ -8,4 +8,5 @@ export default function Button({ label, handleClick }) {
 }
 Button.propTypes = {
   label: PropTypes.string.isRequired,
+  handleClick: PropTypes.func,
 };

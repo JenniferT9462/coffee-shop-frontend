@@ -7,8 +7,8 @@ const meta = {
 export default meta;
 
 export const Default = {
-  args: {
-    label: "Click Me"
+  args:{
+    label:"Sign Up Now"
   }
 };
 
