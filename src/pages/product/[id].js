@@ -19,8 +19,10 @@ export default function ProductPage() {
     return (
       <div>
         <Header/>
-        <h1>Product Page for product &#35; { id }</h1>
-        <ProductCard product={product} />
+        <div className="w-1/3 h-screen">
+          <h1>Product Page for product &#35; { id }</h1>
+          <ProductCard product={product} />
+        </div>
         <Footer title={"Brew Haven 2024"}/>
       </div>
     );
