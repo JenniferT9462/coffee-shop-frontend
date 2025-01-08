@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
           <p>${product.price}</p>
         </div>
         <div className="mt-auto card-actions justify-end">
-          <Button label="Add to Cart" />
+          <Button label="Add to Cart" handleClick={() => alert("Product Added to Cart!")} />
         </div>
       </div>
     </div>
