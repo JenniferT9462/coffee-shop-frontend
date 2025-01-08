@@ -8,13 +8,16 @@ export default function CheckoutPage() {
       <Header />
       <div className="container mx-auto flex-grow px-4">
         <h1 className="text-5xl text-center my-8">Checkout</h1>
+        {/* DaisyUI Divider */}
         <div className="divider divider-primary">Progress</div>
+        {/* DaisyUI Steps to display progress. TODO: add logic  */}
         <ul className="steps mb-8">
           <li className="step step-primary">Contact Info</li>
           <li className="step">Shipping Details</li>
           <li className="step">Payment Method</li>
           <li className="step">Review</li>
         </ul>
+
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Section: Forms */}
           <div className="lg:col-span-2 space-y-8">

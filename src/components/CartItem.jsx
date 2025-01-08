@@ -9,6 +9,7 @@ export default function CartItem({ product, onRemove, onQuantityChange }) {
           <h3 className="text-lg font-medium">{product.name}</h3>
           <p className="text-sm text-gray-500">Price: ${product.price}</p>
         </div>
+        {/* Quantity buttons */}
         <div className="flex items-center space-x-2">
           <button
             onClick={() => onQuantityChange(product._id, product.quantity - 1)}
