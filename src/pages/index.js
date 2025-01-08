@@ -15,7 +15,7 @@ export default function Home() {
         {/* <h1>Coffee Shop Frontend Splash Page</h1> */}
         <HeroSection/>
     </main>
-    <Footer title={"Brew Haven 2024"}/>
+    <Footer title={"Brew Haven"}/>
     {/* <HelloBackend/> */}
     {/* <TestButton/> */}
   </div>
