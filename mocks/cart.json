@@ -5,6 +5,7 @@
       {
         "_id": "1",
         "name": "Blueberry Muffins",
+        "imageUrl": "/blueberryMuffin.jpg",
         "price": 3.5,
         "quantity": 2,
         "subtotal": 7.0
@@ -12,6 +13,7 @@
       {
         "_id": "2",
         "name": "Everything Bagel",
+        "imageUrl": "/everythingBagel.jpg",
         "price": 2.5,
         "quantity": 3,
         "subtotal": 7.5
@@ -19,6 +21,7 @@
       {
         "_id": "4",
         "name": "Latte",
+        "imageUrl": "/latte.jpg",
         "price": 4.0,
         "quantity": 1,
         "subtotal": 4.0
