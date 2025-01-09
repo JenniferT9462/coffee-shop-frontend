@@ -15,7 +15,7 @@ export default function ProductsPage() {
             ))}
           </div>
         </div>
-        <Footer/>
+        <Footer title="Brew Haven"/>
       </div>
     );
   }
