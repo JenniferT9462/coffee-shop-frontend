@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaSignInAlt, FaCoffee, FaHome } from "react-icons/fa";
+import { FaSignInAlt, FaCoffee } from "react-icons/fa";
 
 export default function Header() {
   return (
