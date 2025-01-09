@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function CartItem({ product, onRemove, onQuantityChange }) {
+export default function CartItem({ product }) {
     return (
       <div className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg">
         <img src={product.imageUrl} alt={product.name} className="w-16 h-16 object-cover mr-4" />
@@ -12,7 +12,7 @@ export default function CartItem({ product, onRemove, onQuantityChange }) {
         {/* Quantity buttons */}
         <div className="flex items-center space-x-2">
           <button
-            onClick={() => onQuantityChange(product._id, product.quantity - 1)}
+            // TODO: Add function to calculate quantity change
             className="btn btn-sm btn-secondary"
             disabled={product.quantity <= 1}
           >
@@ -20,13 +20,13 @@ export default function CartItem({ product, onRemove, onQuantityChange }) {
           </button>
           <span>{product.quantity}</span>
           <button
-            onClick={() => onQuantityChange(product._id, product.quantity + 1)}
+            // TODO: Add function to calculate quantity change
             className="btn btn-sm btn-secondary"
           >
             +
           </button>
           <button
-            onClick={onRemove}
+            // TODO Add function to remove items
             className="btn btn-sm btn-error text-white"
           >
             Remove
