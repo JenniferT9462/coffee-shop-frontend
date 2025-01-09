@@ -23,7 +23,7 @@ export default function ProductPage() {
           <h1>Product Page for product &#35; { id }</h1>
           <ProductCard product={product} />
         </div>
-        <Footer title={"Brew Haven 2024"}/>
+        <Footer title={"Brew Haven"}/>
       </div>
     );
   }
