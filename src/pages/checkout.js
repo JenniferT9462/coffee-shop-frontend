@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Button from "@/components/Button";
+import CartSummary from "@/components/CartSummary";
 
 export default function CheckoutPage() {
   return (
@@ -9,7 +9,7 @@ export default function CheckoutPage() {
       <div className="container mx-auto flex-grow px-4">
         <h1 className="text-5xl text-center my-8">Checkout</h1>
         {/* DaisyUI Divider */}
-        <div className="divider divider-primary">Progress</div>
+        <div className="divider divider-primary divider-start">Progress</div>
         {/* DaisyUI Steps to display progress. TODO: add logic  */}
         <ul className="steps mb-8">
           <li className="step step-primary">Contact Info</li>
@@ -126,30 +126,8 @@ export default function CheckoutPage() {
           </div>
 
           {/* Right Section: Checkout Summary */}
-          <div className="shadow-md rounded-lg bg-base-100 p-4 h-1/2">
-            <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-            <ul className="space-y-2">
-              <li className="flex justify-between">
-                <span>Item 1</span>
-                <span>$10.00</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Item 2</span>
-                <span>$15.00</span>
-              </li>
-              <li className="flex justify-between font-bold">
-                <span>Total</span>
-                <span>$25.00</span>
-              </li>
-            </ul>
-            <Button
-              className="btn btn-primary w-full"
-              label="Proceed to Checkout"
-              handleClick={() => {
-                alert("Thank you for your patronage");
-              }}
-            />
-          </div>
+          <CartSummary/>
+          
         </div>
       </div>
       <Footer title={"Brew Haven"} />
