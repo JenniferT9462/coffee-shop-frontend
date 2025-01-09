@@ -1,0 +1,75 @@
+[
+    {
+      "_id": "1",
+      "name": "Blueberry Muffins",
+      "description": "Delicious muffins loaded with fresh blueberries.",
+      "price": 3.5,
+      "category": "Bakery",
+      "imageUrl": "/blueberryMuffin.jpg",
+      "stock": 15
+    },
+    {
+      "_id": "2",
+      "name": "Everything Bagel",
+      "description": "A savory bagel topped with a mix of seeds and spices.",
+      "price": 2.5,
+      "category": "Bakery",
+      "imageUrl": "/everythingBagel.jpg",
+      "stock": 20
+    },
+    {
+      "_id": "3",
+      "name": "Coffee",
+      "description": "Freshly brewed coffee made from premium beans.",
+      "price": 2.0,
+      "category": "Beverages",
+      "imageUrl": "/coffee.jpg",
+      "stock": 50
+    },
+    {
+      "_id": "4",
+      "name": "Latte",
+      "description": "Smooth espresso combined with steamed milk and a touch of foam.",
+      "price": 4.0,
+      "category": "Beverages",
+      "imageUrl": "/latte.jpg",
+      "stock": 25
+    },
+    {
+      "_id": "5",
+      "name": "Cappuccino",
+      "description": "Classic espresso drink with steamed milk and frothy foam.",
+      "price": 4.0,
+      "category": "Beverages",
+      "imageUrl": "/cappuccino.jpg",
+      "stock": 30
+    },
+    {
+      "_id": "6",
+      "name": "Croissant",
+      "description": "Buttery and flaky French pastry, perfect for breakfast.",
+      "price": 2.75,
+      "category": "Bakery",
+      "imageUrl": "/croissant.jpg",
+      "stock": 18
+    },
+    {
+      "_id": "7",
+      "name": "Mocha",
+      "description": "Rich espresso mixed with chocolate syrup and steamed milk.",
+      "price": 4.5,
+      "category": "Beverages",
+      "imageUrl": "/mocha.jpg",
+      "stock": 22
+    },
+    {
+      "_id": "8",
+      "name": "Tea",
+      "description": "A soothing cup of freshly brewed tea, available in various flavors.",
+      "price": 2.5,
+      "category": "Beverages",
+      "imageUrl": "/tea.jpg",
+      "stock": 40
+    }
+  ]
+  

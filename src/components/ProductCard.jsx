@@ -1,20 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import Button from "./Button";
 
-export default function ProductCard({ title }) {
+export default function ProductCard({ product }) {
+  console.log(product);
+  if (!product) {
+    return <div>Loading...</div>; 
+  }
+
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white border">
-      <div>Product Card Component {title} </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="card w-64 bg-base-100 shadow-xl">
+        {/* Daisy UI Figure */}
+        <figure className="h-48">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="object-cover w-full h-full"
+          />
+        </figure>
+        <div>
+          <h3 className="card-title">{product.name}</h3>
+          <p>{product.description}</p>
+          <p>${product.price}</p>
+        </div>
+        <div className="mt-auto card-actions justify-end">
+          <Button
+            label="Add to Cart"
+            handleClick={() => alert("Product Added to Cart!")}
+          />
+        </div>
+      </div>
     </div>
   );
-};
+}
 
-// Define prop types
 ProductCard.propTypes = {
-  title: PropTypes.string.isRequired, // The title of the product
-  image: PropTypes.string.isRequired, // URL for the product image
-  price: PropTypes.number.isRequired, // Price of the product
-  onAddToCart: PropTypes.func.isRequired, // Callback function when "Add to Cart" is clicked
+  product: PropTypes.object.isRequired,
 };
-
-
