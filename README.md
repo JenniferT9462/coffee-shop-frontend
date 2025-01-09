@@ -74,10 +74,44 @@ If you would like to contribute to this project, please follow these steps:
 5. Push your changes to your fork.
 6. Create a pull request.
 
+## Design Process
+- NavBar & Footer:
+    - I use `DaisyUI` and `Iconify` for both components.
+    - Coffee Icons: <https://icon-sets.iconify.design/?query=coffee> 
+    - NavBar: <https://daisyui.com/components/navbar/>
+    - Card: <https://daisyui.com/components/card/>
+- Splash Page:
+    * I used MicroSoft Image Generator for my splash page image and DaisyUI for the Hero with Overlay Image. <https://designer.microsoft.com/image-creator>
+- Sign Up & Sign In:
+    * I used DaisyUI for a Hero with Form.
+- Product Cards:
+    * I used DaisyUI Cards for my ProductCard that is used in both, `product/[id].js` and `products.js` pages.
+- Cart & Checkout pages:
+    * Similar to the ProductCards and Forms I used in my other pages.
+    * For Checkout Page: I used DaisyUI `divider` and `steps`.  
+### Design Goals
+- I want to choose a different font for my project. I like `Oh No!` font. 
+- I may tweak my color scheme, specifically the overall text color. And add a `dark` and `light` mode with a toggle button. 
+- I still need to build a `NavBar` and what links I need to include with navigation. Also, decide how I want to display a `cart icon` with counter. I may also add some effects or animation when adding items to cart or motion effect on page loads. The animation I am thinking is similar to the McDonald's App when adding items to cart, it does a effect to the cart icon. It kinda looks like it's diving into the cart icon(may be a stretch, but we will see).
+
 ## Screenshots
 
 ### Storybook
 ![storybook screenshot](</public/storybook1.png>)
+### Splash Page
+![splash Page](</public/splashPage.png>)
+### Sign Up Page
+![sign up Page](</public/signUpPage.png>)
+### Sign In Page
+![sign in Page](</public/signInPage.png>)
+### Product Page ([id].js)
+![single product page](</public/productPage.png>)
+### Products Page
+![products page](</public/productsPage.png>)
+### Cart Page
+![cart page](</public/cartPage.png>)
+### Checkout Page
+![checkout page](</public/checkoutPage.png>)
 
 ## Attribution
 
@@ -86,6 +120,8 @@ Give credit to any resources or inspiration you used in this project.
 - [Tailwind CSS](https://tailwindcss.com/)
 - [DaisyUI](https://daisyui.com/)
 - [Storybook](https://storybook.js.org/)
+- [MicroSoft Image Creator](https://designer.microsoft.com/image-creator)
+- [iconify](https://icon-sets.iconify.design/)
 
 
 
