@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 export default function NavBar({ title, items }) {
   return (
-    <div className='navbar'>
-      <div>NavBar Component {title} </div>
-      <div>{items}</div>
+    <div className="navbar bg-neutral text-neutral-content">
+      <button className="btn btn-ghost text-xl">{title}</button>
+      {items}
     </div>
   )
 }

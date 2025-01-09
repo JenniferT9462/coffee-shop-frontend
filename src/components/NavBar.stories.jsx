@@ -12,3 +12,10 @@ export const Default = {
     items: ["Home", "About", "Cart", "Login", "Sign Up"]
   }
 };
+
+export const Title = {
+  args: {
+    title: "Brew Haven",
+    items: ["Home", "About", "Cart", "Login", "Sign Up"]
+  }
+};
