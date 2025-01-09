@@ -8,7 +8,7 @@ export default function signin() {
     <>
       <Header />
       <SignInForm buttonLabel="Sign In" title="Sign In Now!" handleSignIn={() => alert("You are Signed In!")}/>
-      <Footer title={"Brew Haven 2024"} />
+      <Footer title={"Brew Haven"} />
     </>
   );
 }
