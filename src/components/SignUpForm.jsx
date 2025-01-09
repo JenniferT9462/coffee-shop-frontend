@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-export default function SignUpForm({ buttonLabel, title }) {
+export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
   return (
     <div className="hero bg-base-100 min-h-screen text-primary">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -58,9 +58,8 @@ export default function SignUpForm({ buttonLabel, title }) {
               <Button
                 className="btn btn-primary"
                 label={buttonLabel}
-                handleClick={() => {
-                  console.log("clicked sign up");
-                }}
+                handleClick={handleSignUp}
+                
               />
             </div>
           </form>
