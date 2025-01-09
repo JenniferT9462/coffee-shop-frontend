@@ -1,6 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartSummary from "@/components/CartSummary";
+import ContactDetails from "@/components/ContactDetails";
+import ShippingDetails from "@/components/ShippingDetails";
+import PaymentDetails from "@/components/PaymentDetails";
 
 export default function CheckoutPage() {
   return (
@@ -22,111 +25,17 @@ export default function CheckoutPage() {
           {/* Left Section: Forms */}
           <div className="lg:col-span-2 space-y-8">
             {/* Contact Details Form */}
-            <section className="p-4 shadow-md rounded-lg bg-base-100">
-              <h2 className="text-xl font-bold mb-4">Contact Details</h2>
-              <form className="space-y-4">
-                <div>
-                  <label className="label">Name</label>
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div>
-                  <label className="label">Email</label>
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div>
-                  <label className="label">Phone</label>
-                  <input
-                    type="tel"
-                    placeholder="Your Phone Number"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-              </form>
-            </section>
+            <ContactDetails/>
 
             {/* Shipping Details Form */}
-            <section className="p-4 shadow-md rounded-lg bg-base-100">
-              <h2 className="text-xl font-bold mb-4">Shipping Details</h2>
-              <form className="space-y-4">
-                <div>
-                  <label className="label">Address</label>
-                  <input
-                    type="text"
-                    placeholder="Street Address"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div>
-                  <label className="label">City</label>
-                  <input
-                    type="text"
-                    placeholder="City"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="label">State</label>
-                    <input
-                      type="text"
-                      placeholder="State"
-                      className="input input-bordered w-full"
-                    />
-                  </div>
-                  <div>
-                    <label className="label">Zip Code</label>
-                    <input
-                      type="text"
-                      placeholder="Zip Code"
-                      className="input input-bordered w-full"
-                    />
-                  </div>
-                </div>
-              </form>
-            </section>
+            <ShippingDetails/>
 
             {/* Payment Method Form */}
-            <section className="p-4 shadow-md rounded-lg bg-base-100">
-              <h2 className="text-xl font-bold mb-4">Payment Method</h2>
-              <form className="space-y-4">
-                <div>
-                  <label className="label">Card Number</label>
-                  <input
-                    type="text"
-                    placeholder="Card Number"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div>
-                  <label className="label">Expiration Date</label>
-                  <input
-                    type="text"
-                    placeholder="MM/YY"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div>
-                  <label className="label">CVV</label>
-                  <input
-                    type="text"
-                    placeholder="CVV"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-              </form>
-            </section>
+            <PaymentDetails/>
           </div>
 
           {/* Right Section: Checkout Summary */}
-          <CartSummary/>
+          <CartSummary title="Order Summary" totalPrice="25.00"/>
           
         </div>
       </div>
