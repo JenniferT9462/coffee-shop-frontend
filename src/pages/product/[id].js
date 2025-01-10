@@ -9,6 +9,11 @@ export default function ProductPage() {
     const router = useRouter();
     const { id } = router.query;
 
+    // Wait for the router to be ready before accessing the query
+    if (!router.isReady) {
+      return <div>Loading...</div>;
+    }
+
     // Find the product that matches the id
     const product = products.find((product) => product._id === id);
 
