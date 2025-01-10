@@ -16,12 +16,17 @@ export default function ProductPage() {
       return <div>Product not found</div>;
     }
 
+    function addToCart() {
+      alert( product.name + " Has Been Added to Your Cart!!");
+      // TODO: Add fetch to backend
+    }
+
     return (
       <div>
         <Header/>
         <div className="w-1/3 h-screen">
           <h1>Product Page for product &#35; { id }</h1>
-          <ProductCard product={product} />
+          <ProductCard product={product} onAddToCart={addToCart} />
         </div>
         <Footer title={"Brew Haven"}/>
       </div>
