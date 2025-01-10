@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import products from "../../../mocks/products.json";
 import { useRouter } from 'next/router';
+import Loader from "@/components/Loader";
 
 
 export default function ProductPage() {
@@ -11,7 +12,7 @@ export default function ProductPage() {
 
     // Wait for the router to be ready before accessing the query
     if (!router.isReady) {
-      return <div>Loading...</div>;
+      return <div><Loader/></div>;
     }
 
     // Find the product that matches the id
