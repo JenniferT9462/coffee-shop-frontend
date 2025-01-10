@@ -5,6 +5,8 @@ export default function Button({ label, handleClick, variant = "primary", fullWi
       primary: "btn-primary",
       secondary: "btn-secondary",
       error: "btn-error",
+      warning: "btn-warning",
+      info: "btn-info",
     }[variant] || "btn-primary"; // Fallback to "btn-primary" if no match
 
   return (
