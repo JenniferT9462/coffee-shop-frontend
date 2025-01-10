@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-export default function Button({ label, handleClick }) {
+export default function Button({ label, handleClick, variant="primary" }) {
   return (
     <button 
       type="button" 
       onClick={handleClick} 
-      className="btn btn-primary w-full">
+      className={`btn btn-${variant}`}>
       {label}
     </button>
   );
