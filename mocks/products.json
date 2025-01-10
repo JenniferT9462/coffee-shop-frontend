@@ -70,6 +70,15 @@
       "category": "Beverages",
       "imageUrl": "/tea.jpg",
       "stock": 40
+    },
+    {
+      "_id": "9",
+      "name": "Espresso",
+      "description": "A bold and rich shot of concentrated coffee, crafted with finely-ground beans and brewed under high pressure. Topped with a velvety crema.",
+      "price": 3.5,
+      "category": "Beverages",
+      "imageUrl": "/espresso.webp",
+      "stock": 20
     }
   ]
   
