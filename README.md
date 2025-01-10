@@ -121,7 +121,9 @@ Give credit to any resources or inspiration you used in this project.
 - [DaisyUI](https://daisyui.com/)
 - [Storybook](https://storybook.js.org/)
 - [MicroSoft Image Creator](https://designer.microsoft.com/image-creator)
-- [iconify](https://icon-sets.iconify.design/)
+- [Iconify](https://icon-sets.iconify.design/)
+- [Favicon](https://favicon.io/)
+- [Google Fonts](https://fonts.google.com/)
 
 
 

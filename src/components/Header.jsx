@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaSignInAlt, FaCoffee, FaHome } from "react-icons/fa";
+import { FaSignInAlt, FaCoffee } from "react-icons/fa";
 
 export default function Header() {
   return (
@@ -23,11 +23,11 @@ export default function Header() {
       {/* Navigation Links */}
       <div className="flex-1 justify-end space-x-4">
         
-        <Link href="/products" className="btn btn-ghost gap-2">
+        <Link href="/products" className="navLink btn btn-ghost gap-2">
           <FaCoffee />
             Products
         </Link>
-        <Link href="/signin" className="btn btn-ghost gap-2">
+        <Link href="/signin" className="navLink btn btn-ghost gap-2">
           <FaSignInAlt />
             Sign In
         </Link>

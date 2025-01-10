@@ -19,3 +19,15 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 } */
+
+/* Apply Lora for body text */
+body {
+  font-family: 'Lora', serif;
+  line-height: 1.6;  /* For better readability */
+}
+
+/* Apply Lobster for headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lobster', cursive;
+  font-weight: 400;  /* You can adjust the weight if needed */
+}

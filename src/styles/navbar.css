@@ -1,5 +1,11 @@
 /* styles/navbar.css */
 .navbar {
+    font-family: 'Lobster', cursive;
     background-color: #6b4f4f;
     color: white;
-  }
+}
+
+.navLink {
+  font-family: 'Lora', serif;
+  line-height: 1.6; 
+}
