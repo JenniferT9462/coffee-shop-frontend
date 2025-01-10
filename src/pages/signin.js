@@ -2,11 +2,14 @@ import Footer from "@/components/Footer";
 // import SignUpForm from "@/components/SignUpForm";
 import Header from "@/components/Header";
 import SignInForm from "@/components/SignInForm";
+import { useRouter } from "next/router";
 
 export default function signin() {
+  const router = useRouter();
   function signIn() {
     alert("Your are Signed In!!!")
-    // TODO: add redirect?
+    // May redirect to a dashboard
+    router.push('/products');
   }
 
   return (
