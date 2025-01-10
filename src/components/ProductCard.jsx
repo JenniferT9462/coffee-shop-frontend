@@ -24,10 +24,11 @@ export default function ProductCard({ product, onAddToCart }) {
           <p>{product.description}</p>
           <p>${product.price}</p>
         </div>
-        <div className="mt-auto card-actions justify-end">
+        <div className="mt-auto card-actions">
           <Button
             label="Add to Cart"
             handleClick={onAddToCart}
+            fullWidth
           />
         </div>
       </div>

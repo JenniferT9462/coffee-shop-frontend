@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-export default function Button({ label, handleClick, variant = "primary" }) {
+export default function Button({ label, handleClick, variant = "primary", fullWidth = false }) {
   const variantClass =
     {
       primary: "btn-primary",
@@ -11,7 +11,7 @@ export default function Button({ label, handleClick, variant = "primary" }) {
     <button
       type="button"
       onClick={handleClick}
-      className={`btn ${variantClass}`}
+      className={`btn ${variantClass} ${fullWidth ? "w-full" : ""}`}
     >
       {label}
     </button>
@@ -20,4 +20,6 @@ export default function Button({ label, handleClick, variant = "primary" }) {
 Button.propTypes = {
   label: PropTypes.string.isRequired,
   handleClick: PropTypes.func,
+  variant: PropTypes.string,
+  fullWidth: PropTypes.bool,
 };
