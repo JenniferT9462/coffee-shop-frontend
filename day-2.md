@@ -473,7 +473,14 @@
     if (!product) {
       return <div>Product not found</div>;
     } 
-
+- Had an issue when putting a `variant` prop to my Button component, I fixed by adding:
+    ```js
+     const variantClass = {
+        primary: "btn-primary",
+        secondary: "btn-secondary",
+        error: "btn-error",
+    }[variant] || "btn-primary"; // Fallback to "btn-primary" if no match
+- This now helps to handle cases where the variant prop does not match a Tailwind/DaisyUI class.
 ## Key Deliverables:
 * Functional and styled UI components.
 * Dynamic forms for login, signup, and product management.
