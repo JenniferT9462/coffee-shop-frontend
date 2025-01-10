@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product, onAddToCart, onViewProduct }) {
   console.log(product);
   if (!product) {
     return <div>Loading...</div>; 
   }
-
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="card w-64 bg-base-100 shadow-xl">
@@ -30,6 +30,9 @@ export default function ProductCard({ product, onAddToCart }) {
             handleClick={onAddToCart}
             fullWidth
           />
+          {onViewProduct && (
+            <Button label="View Product" variant="warning" handleClick={onViewProduct} fullWidth/>
+          )}
         </div>
       </div>
     </div>
@@ -38,4 +41,10 @@ export default function ProductCard({ product, onAddToCart }) {
 
 ProductCard.propTypes = {
   product: PropTypes.object.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
+  onViewProduct: PropTypes.func,
+};
+
+ProductCard.defaultProps = {
+  onViewProduct: null,
 };
