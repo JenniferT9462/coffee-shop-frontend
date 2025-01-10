@@ -481,6 +481,20 @@
         error: "btn-error",
     }[variant] || "btn-primary"; // Fallback to "btn-primary" if no match
 - This now helps to handle cases where the variant prop does not match a Tailwind/DaisyUI class.
+- I was having issues with my Button style, I wanted only the ProductCard, which uses the Button component to be the full width of the container and not full for other components that use the Button component. So I added a prop to Button component `fullWidth = false` and updated the className with a conditional statement to be flexible: 
+    ```js
+    <button
+      type="button"
+      onClick={handleClick}
+      className={`btn ${variantClass} ${fullWidth ? "w-full" : ""}`} >
+        {label}
+    </button>
+   
+ and then passed it the the Button component in my ProductCard component and removed the `justify-end` in my `div`:
+    ```js
+     <div className="mt-auto card-actions">
+        <Button label="Add to Cart" handleClick={onAddToCart} fullWidth />
+    </div>
 ## Key Deliverables:
 * Functional and styled UI components.
 * Dynamic forms for login, signup, and product management.
