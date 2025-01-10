@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from './Button';
 
-export default function CartItem({ product }) {
+export default function CartItem({ product, removeItem }) {
     return (
       <div className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg">
         <img src={product.imageUrl} alt={product.name} className="w-16 h-16 object-cover mr-4" />
@@ -25,12 +26,12 @@ export default function CartItem({ product }) {
           >
             +
           </button>
-          <button
+          <Button
             // TODO Add function to remove items
-            className="btn btn-sm btn-error text-white"
-          >
-            Remove
-          </button>
+            variant="error"
+            label="Remove"
+            handleClick={removeItem}
+          />
         </div>
       </div>
     );

@@ -5,6 +5,21 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 export default function CartPage() {
+  const cartContent = cart.items;
+
+  const cartJSX = cartContent.map((product) => {
+    function removeItem() {
+      alert(product.name + "Has Been Removed From Cart!")
+    }
+    return (<CartItem
+              key={product._id}
+              product={product}
+              removeItem={removeItem}
+              />)
+  })
+  function checkout(){
+    alert("Proceeding to Checkout!")
+  }
   return (
     <div className="text-primary">
       <Header />
@@ -15,10 +30,7 @@ export default function CartPage() {
           <div className="w-full md:w-2/3">
             <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
             <div className="space-y-4">
-              {cart.items.map((item) => (
-                <CartItem key={item._id} product={item} />
-                // TODO: Add function to remove items
-              ))}
+              {cartJSX}
             </div>
           </div>
 
@@ -30,7 +42,7 @@ export default function CartPage() {
               {/* TODO: Add function to calculate total */}
               <span>${cart.totalPrice}</span>
             </div>
-            <Button label="Checkout" className="btn btn-primary" handleClick={() => alert("Proceeding to Checkout!")}>Checkout</Button>
+            <Button label="Proceed to Checkout" className="btn btn-primary w-full" handleClick={checkout}/>
           </div>
         </div>
       </div>
