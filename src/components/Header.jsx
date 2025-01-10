@@ -5,8 +5,10 @@ import { useRouter } from "next/router";
 
 export default function Header() {
   const router = useRouter();
+  // Make CartButton disappear on Home, signup and signin
   const isHomePage = router.pathname === "/";
-  // TODO: maybe make the cart disappear on signup and signin?
+  const isSignUpPage = router.pathname === "/signup";
+  const isSignInPage = router.pathname === "/signin";
 
 
   return (
@@ -39,7 +41,7 @@ export default function Header() {
             Sign In
         </Link>
         {/* Make cart not display on homepage */}
-        {!isHomePage && (
+        {!isHomePage && !isSignUpPage && !isSignInPage && (
           <Link href="/cart" className="navLink btn btn-ghost gap-2">
             <CartButton itemCount={3}/>
         </Link>
