@@ -3,6 +3,7 @@ import cart from "../../mocks/cart.json";
 import CartItem from "@/components/CartItem";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useRouter } from "next/router";
 
 export default function CartPage() {
   const cartContent = cart.items;
@@ -17,8 +18,10 @@ export default function CartPage() {
               removeItem={removeItem}
               />)
   })
+  const router = useRouter();
   function checkout(){
     alert("Proceeding to Checkout!")
+    router.push('/checkout');
   }
   return (
     <div className="text-primary">
