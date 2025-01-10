@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { FaSignInAlt, FaCoffee } from "react-icons/fa";
+import CartButton from "./CartButton";
+import { useRouter } from "next/router";
 
 export default function Header() {
+  const router = useRouter();
+  const isHomePage = router.pathname === "/";
+  // TODO: maybe make the cart disappear on signup and signin?
+
+
   return (
     <div className="navbar bg-primary text-primary-content">
       {/* Logo */}
@@ -31,6 +38,13 @@ export default function Header() {
           <FaSignInAlt />
             Sign In
         </Link>
+        {/* Make cart not display on homepage */}
+        {!isHomePage && (
+          <Link href="/cart" className="navLink btn btn-ghost gap-2">
+            <CartButton itemCount={3}/>
+        </Link>
+        )}
+        
       </div>
     </div>
   );
