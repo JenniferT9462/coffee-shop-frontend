@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onAddToCart }) {
   console.log(product);
   if (!product) {
     return <div>Loading...</div>; 
@@ -27,7 +27,7 @@ export default function ProductCard({ product }) {
         <div className="mt-auto card-actions justify-end">
           <Button
             label="Add to Cart"
-            handleClick={() => alert("Product Added to Cart!")}
+            handleClick={onAddToCart}
           />
         </div>
       </div>
