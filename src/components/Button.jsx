@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-export default function Button({ label, handleClick, variant = "primary", fullWidth = false }) {
+export default function Button({ label, handleClick, variant = "primary", fullWidth = false, type = "button" }) {
   const variantClass =
     {
       primary: "btn-primary",
@@ -11,7 +11,7 @@ export default function Button({ label, handleClick, variant = "primary", fullWi
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={handleClick}
       className={`btn ${variantClass} ${fullWidth ? "w-full" : ""}`}
     >

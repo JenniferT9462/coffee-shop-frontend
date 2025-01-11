@@ -1,11 +1,27 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CartSummary from "@/components/CartSummary";
-import ContactDetails from "@/components/ContactDetails";
-import ShippingDetails from "@/components/ShippingDetails";
-import PaymentDetails from "@/components/PaymentDetails";
+import CheckoutForm from "@/components/CheckoutForm";
+import cart from "../../mocks/cart.json";
+
 
 export default function CheckoutPage() {
+
+  function handleCheckout(name,
+    email,
+    phone,
+    address,
+    city,
+    state,
+    zipcode,
+    cardNumber,
+    exDate,
+    cvv,) {
+    alert('Checkout clicked! Thank you ' + name +  " Your order will be shipped to: " + address );
+    // TODO: send to server...
+  }
+
+    
+  
   return (
     <div className="h-screen flex flex-col text-primary">
       <Header />
@@ -21,23 +37,10 @@ export default function CheckoutPage() {
           <li className="step">Review</li>
         </ul>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Left Section: Forms */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Contact Details Form */}
-            <ContactDetails/>
+        {/* Checkout Form Section */}
+        <CheckoutForm handleCheckout={handleCheckout} />
+       
 
-            {/* Shipping Details Form */}
-            <ShippingDetails/>
-
-            {/* Payment Method Form */}
-            <PaymentDetails/>
-          </div>
-
-          {/* Right Section: Checkout Summary */}
-          <CartSummary title="Order Summary" totalPrice="25.00"/>
-          
-        </div>
       </div>
       <Footer title={"Brew Haven"} />
     </div>

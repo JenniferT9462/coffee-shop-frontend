@@ -1,34 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "./Button";
+import cart from "../../mocks/cart.json";
+import CartItem from "./CartItem";
 
-export default function CartSummary({ title, totalPrice}) {
+export default function CartSummary({ title }) {
+  const cartContent = cart.items;
+  const price = cart.totalPrice;
+  
+  const cartJSX = cartContent.map((product) => {
+      function removeItem() {
+        alert(product.name + "Has Been Removed From Cart!")
+      }
+      return (<CartItem
+                key={product._id}
+                product={product}
+                removeItem={removeItem}
+                />)
+    })
   return (
-    <div className="shadow-md rounded-lg bg-base-100 p-4">
-      <h2 className="text-xl font-bold mb-4">{title}</h2>
-      <ul className="space-y-2">
-        {/* TODO: Add real cart data and calculate total */}
-        <li className="flex justify-between">
-          <span>Item 1</span>
-          <span>$10.00</span>
-        </li>
-        <li className="flex justify-between">
-          <span>Item 2</span>
-          <span>$15.00</span>
-        </li>
-        <li className="flex justify-between font-bold">
-          <span>Total</span>
-          <span>{totalPrice}</span>
-        </li>
-      </ul>
-      {/* TODO: Add functionality for checkout */}
-      <Button
-        className="btn btn-primary w-full"
-        label="Buy Now"
-        handleClick={() => {
-          alert("Thank you for your patronage");
-        }}
-      />
+    <div className="shadow-lg rounded-lg bg-base-100 p-6 max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+      <div className="space-y-4">
+        {cartJSX}
+        <div className="text-end">
+         <h2 className="text-lg font-bold">Total Price:<span> ${price}</span></h2>  
+        </div>
+      </div>
+      
     </div>
   );
 }
