@@ -584,7 +584,7 @@
     <div className="mt-auto card-actions">
         <Button label="Add to Cart" handleClick={onAddToCart} fullWidth />
     </div>
-
+- Breaking up my sections of the checkout form was tricky, I had to pass `type` as a prop so I could use the  `Button` component and `onSubmit`. 
 ## Key Deliverables:
 * Functional and styled UI components.
 * Dynamic forms for login, signup, and product management.
