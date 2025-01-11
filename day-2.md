@@ -454,6 +454,95 @@
 - Create a new story in Storybook for the CheckoutForm component.
 - Git commit with a message like `"Add Checkout page"`.
 
+## Extra Features
+- Added a `View Product` button, I wanted a redirect to the single product page for the `ProductsPage`:
+    1. Add a prop to `ProductCard` named `onViewProduct`:
+        ```js
+        export default function ProductCard({ product, onAddToCart, onViewProduct })
+    2. Pass the `onViewProduct` prop to the `Button` component in the `ProductCard`:
+        ```js
+        <Button 
+            label="View Product" 
+            variant="warning" 
+            handleClick={onViewProduct} 
+            fullWidth
+        />
+    3. To make the `viewButton` only visible on the `ProductsPage`:
+        ```js
+        {onViewProduct && (
+            <Button 
+                label="View Product" 
+                variant="warning" 
+                handleClick={onViewProduct} 
+                fullWidth
+            />
+          )}
+    4. In the `ProductPage` component, use `useRouter` to navigate to the `[id].js` page when `View Product` is clicked:
+        ```js
+        const router = useRouter();
+        function viewProduct() {
+            router.push(`/products/${product._id}`);
+        }
+    5. Make sure to pass the `onViewProduct` prop to the `ProductCard` with the `viewProduct` function in the `products.js` file:
+        ```js
+          <ProductCard
+            key={product._id}
+            product={product}
+            onAddToCart={addToCart}
+            onViewProduct={viewProduct}
+          />
+- Added a `CartButton` that is an icon found on `Iconify` and an `itemCount` badge using `DaisyUI` class:
+    1. Found a cart icon on `Iconify` and downloaded it via `JSX`.
+    2. Added a prop `itemCount` to the `CartButton` component.
+    3. Set the button to relative className.
+    4. Put the cart icon inside the `button` tags.
+    5. Added a badge inside the `button` tags with the following classes and used the `itemCount` prop. Make sure to make it not appear if the `itemCount` is 0:
+        ```js
+        {itemCount > 0 && (
+            <span className="badge absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-warning text-primary text-xs font-bold">
+                {itemCount}
+            </span>
+        )}
+    6. Pass the `itemCount` to the `CartButton`:
+        ```js
+        <CartButton itemCount={3}/>
+    7. Will add function and logic to get the actual item count in the future. 
+- Redirects:
+    * From `CartPage` to `CheckoutPage`:
+        ```js
+        const router = useRouter();
+        function checkout(){
+            alert("Proceeding to Checkout!")
+            router.push('/checkout');
+        }
+    * From `SignInPage` to `ProductsPage`:
+        ```js
+        const router = useRouter();
+        function signIn() {
+            alert("Your are Signed In!!!")
+            // May redirect to a dashboard
+            router.push('/products');
+        }
+    * From `ViewButton` to `products/[id].js`:
+        ```js
+        const router = useRouter();
+        function viewProduct() {
+            router.push(`/products/${product._id}`);
+        }
+- Hid the `CartButton` on the `HomePage`, `SignUpPage` and the `SignInPage`:
+    1. In the `Header` component, use the `useRouter` hook from Next.js to check the current route: 
+        ```js
+        const isHomePage = router.pathname === "/";
+        const isSignUpPage = router.pathname === "/signup";
+        const isSignInPage = router.pathname === "/signin";
+    2. Based on the route, conditionally render the `CartButton` in the `Header` component:
+        ```js
+        {!isHomePage && !isSignUpPage && !isSignInPage && (
+          <Link href="/cart" className="navLink btn btn-ghost gap-2">
+            <CartButton itemCount={3}/>
+        </Link>
+        )}
+
 ## Challenges
 - The buttons for the sign up form do not console log. 
     * UPDATE: I fixed the issue by adding `type="button"` in my Button component. 
@@ -490,11 +579,12 @@
         {label}
     </button>
    
- and then passed it the the Button component in my ProductCard component and removed the `justify-end` in my `div`:
+ - and then passed it to the Button component in my ProductCard component and removed the `justify-end` in my `div`:
     ```js
-     <div className="mt-auto card-actions">
+    <div className="mt-auto card-actions">
         <Button label="Add to Cart" handleClick={onAddToCart} fullWidth />
     </div>
+
 ## Key Deliverables:
 * Functional and styled UI components.
 * Dynamic forms for login, signup, and product management.
