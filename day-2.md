@@ -448,12 +448,105 @@
 ### Checkout Page
 - In your `checkout.js` file, create a layout for the checkout page.
 - Include the header and footer.
-- Create a form to collect:
-    * Address
-    * Phone Number
-- Add a "Buy Now" button.
-- For now, leave the payment functionality as a placeholder. You could have an alert that says "Thank you for your patronage" when the button is clicked.
 - Break the form into a CheckoutForm component.
+    * In `CheckoutForm` I have my form separated into 3 sections that take input fields:
+        - ContactDetails
+        - ShippingDetails
+        - PaymentDetails
+    * I also have a `CartSummary` component to display CartItems.
+    ```js
+    import React from "react";
+    import PropTypes from "prop-types";
+    import cart from "../../mocks/cart.json";
+    import CartItem from "./CartItem";
+
+    export default function CartSummary({ title }) {
+    const cartContent = cart.items;
+    const price = cart.totalPrice;
+    
+    const cartJSX = cartContent.map((product) => {
+        function removeItem() {
+            alert(product.name + "Has Been Removed From Cart!")
+        }
+        return (<CartItem
+                    key={product._id}
+                    product={product}
+                    removeItem={removeItem}
+                    />)
+        })
+    return (
+        <div className="shadow-lg rounded-lg bg-base-100 p-6 max-w-md mx-auto">
+        <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+        <div className="space-y-4">
+            {cartJSX}
+            <div className="text-end">
+            <h2 className="text-lg font-bold">Total Price:<span> ${price.toFixed(2)}</span></h2>  
+            </div>
+        </div>
+        
+        </div>
+    );
+    }
+
+    CartSummary.propTypes = {
+    title: PropTypes.string.isRequired,
+    totalPrice: PropTypes.string.isRequired, // URL for the product image
+    };
+
+- Add a "Buy Now" button:
+    ```js
+    <Button
+        className="btn btn-primary"
+        label="Buy Now"
+        type="submit"
+    />
+- CheckoutForm Example:
+    ```js
+    import ContactDetails from "./ContactDetails";
+    import ShippingDetails from "./ShippingDetails";
+    import PaymentDetails from "./PaymentDetails";
+    import CartSummary from "./CartSummary";
+    import Button from "./Button";
+    import PropTypes from "prop-types";
+
+    export default function CheckoutForm({ handleCheckout }) {
+        function handleSubmit() {
+            alert("Thank You for Your Patronage!");
+            console.log("Button has been clicked.");
+        }
+    
+        return (
+            <>
+                {/* Left Section: Forms */}
+                <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2 space-y-8">
+                        {/* Contact Details Form */}
+                        <ContactDetails  />
+
+                        {/* Shipping Details Form */}
+                        <ShippingDetails />
+
+                        {/* Payment Method Form */}
+                        <PaymentDetails />
+                    </div>
+                    {/* Right Section: Checkout Summary */}
+                    <div className="lg:col-span-1 flex flex-col items-center space-y-4">
+                        <CartSummary />
+                        {/* TODO: Add functionality for checkout */}
+                        <Button
+                            className="btn btn-primary"
+                            label="Buy Now"
+                            type="submit"
+                        />
+                    </div>
+                </form>
+            </>
+        );
+        }
+    CheckoutForm.propTypes = {
+        handleCheckout: PropTypes.func,
+    }
+- For now, leave the payment functionality as a placeholder. You could have an alert that says "Thank you for your patronage" when the button is clicked.
 - Create a new story in Storybook for the CheckoutForm component.
 - Git commit with a message like `"Add Checkout page"`.
 
