@@ -26,7 +26,7 @@ export default function CartPage() {
 
   const cartJSX = cartContent.map((product) => {
     function removeItem() {
-      alert(product.name + "Has Been Removed From Cart!")
+      alert(product.name + " Has Been Removed From Cart!")
     }
     return (<CartItem
               key={product._id}
