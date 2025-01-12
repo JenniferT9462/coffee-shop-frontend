@@ -660,12 +660,43 @@
     } 
 - Had an issue when putting a `variant` prop to my Button component, I fixed by adding:
     ```js
-     const variantClass = {
-        primary: "btn-primary",
-        secondary: "btn-secondary",
-        error: "btn-error",
-    }[variant] || "btn-primary"; // Fallback to "btn-primary" if no match
-- This now helps to handle cases where the variant prop does not match a Tailwind/DaisyUI class.
+     export default function Button({ 
+            label, 
+            handleClick, 
+            variant = "primary", 
+            fullWidth = false, 
+            type = "button" 
+            }) {
+        const variantClass = {
+            primary: "btn-primary",
+            secondary: "btn-secondary",
+            error: "btn-error",
+            warning: "btn-warning",
+            info: "btn-info",
+            }[variant] || "btn-primary"; // Fallback to "btn-primary" if no match
+
+        return (
+            <button
+                type={type}
+                onClick={handleClick}
+                className={`btn ${variantClass} ${fullWidth ? "w-full" : ""}`}
+                >
+            {label}
+            </button>
+        );
+    }
+- The `variantClass` object maps variants to class names.
+- `[variant]` dynamically retrieves the class name for the given variant prop. 
+- The `|| "btn-primary"` ensures a default class is applied if the variant is invalid or missing.
+- This now helps to handle cases where the variant prop does not match a Tailwind/DaisyUI class. I call the `Button` component and pass the `variant` prop:
+    ```js
+     <Button
+        type="button"
+        // TODO Add function to remove items
+        variant="error"
+        label="Remove"
+        handleClick={removeItem}
+    />
 - I was having issues with my Button style, I wanted only the ProductCard, which uses the Button component to be the full width of the container and not full for other components that use the Button component. So I added a prop to Button component `fullWidth = false` and updated the className with a conditional statement to be flexible: 
     ```js
     <button
