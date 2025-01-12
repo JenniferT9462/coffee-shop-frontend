@@ -8,14 +8,16 @@ export default function CartItem({ product, removeItem }) {
         <img src={product.imageUrl} alt={product.name} className="w-16 h-16 object-cover mr-4" />
         <div className="flex-grow">
           <h3 className="text-lg font-medium">{product.name}</h3>
-          <p className="text-sm text-gray-500">Price: ${product.price}</p>
+          <p className="text-sm text-gray-500">Price: ${product.price.toFixed(2)}</p>
         </div>
         {/* Quantity buttons */}
         <div className="flex items-center space-x-2">
           <button
+            type="button"
             // TODO: Add function to calculate quantity change
             className="btn btn-sm btn-secondary"
             disabled={product.quantity <= 1}
+            
           >
             -
           </button>
@@ -23,10 +25,13 @@ export default function CartItem({ product, removeItem }) {
           <button
             // TODO: Add function to calculate quantity change
             className="btn btn-sm btn-secondary"
+            type="button"
+            
           >
             +
           </button>
           <Button
+            type="button"
             // TODO Add function to remove items
             variant="error"
             label="Remove"

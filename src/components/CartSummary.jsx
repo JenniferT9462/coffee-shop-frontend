@@ -23,7 +23,7 @@ export default function CartSummary({ title }) {
       <div className="space-y-4">
         {cartJSX}
         <div className="text-end">
-         <h2 className="text-lg font-bold">Total Price:<span> ${price}</span></h2>  
+         <h2 className="text-lg font-bold">Total Price:<span> ${price.toFixed(2)}</span></h2>  
         </div>
       </div>
       
