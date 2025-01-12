@@ -18,6 +18,11 @@ export default function ProductsPage() {
       router.push(`/product/${product._id}`);
     }
 
+    // Stub functions for the ProductsPage
+    const loadProducts = () => console.log("Loading Products...");
+    const filterProducts = (category, start, limit) => console.log("Filtered List of Products...");
+    const viewProduct2 = (product) => console.log("Viewing Product...");
+
     return (
       <ProductCard
         key={product._id}

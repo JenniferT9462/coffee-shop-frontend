@@ -9,6 +9,11 @@ export default function signup() {
     alert('You are Signed Up!!');
     router.push('/signin');
   }
+
+  // Stub function for signup page
+  const registerUser = (user) => console.log("User Registered!");
+
+
   return (
     <>
       <Header />

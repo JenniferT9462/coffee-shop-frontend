@@ -12,6 +12,9 @@ export default function signin() {
     router.push('/products');
   }
 
+    // Stub function for signup page
+    const signInUser = (username, password) => console.log("User Signed In!");
+
   return (
     <>
       <Header />

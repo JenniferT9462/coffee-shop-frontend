@@ -27,6 +27,10 @@ export default function ProductPage() {
       // TODO: Add fetch to backend
     }
 
+    // Stub functions for the Product Page
+    const fetchProduct = (id) => console.log("Fetching Product...");
+    const addToCart2 = (product) => console.log("Adding to Cart...");
+
     return (
       <div>
         <Header/>

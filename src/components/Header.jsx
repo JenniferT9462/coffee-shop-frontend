@@ -10,6 +10,9 @@ export default function Header() {
   const isSignUpPage = router.pathname === "/signup";
   const isSignInPage = router.pathname === "/signin";
 
+  // Stub function for signin
+  const goToLogin = () => console.log("Navigate to Login Page");
+
 
   return (
     <div className="navbar bg-primary text-primary-content">
