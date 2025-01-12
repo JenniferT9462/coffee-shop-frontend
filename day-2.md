@@ -1,4 +1,7 @@
 # Day 2: Component and Form Development
+## Day 2 Part 2
+[Part 2](day-2-part-2.md)
+
 ## Setup Branch for Day 2
 - Before you begin, create a new branch for your work. Make sure your main branch is up to date. Then create a new branch called design-components.
     ```bash
