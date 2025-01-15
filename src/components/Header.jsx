@@ -4,7 +4,7 @@ import CartButton from "./CartButton";
 import { useRouter } from "next/router";
 // import ThemeController from "./ThemeController";
 
-export default function Header() {
+export default function Header({ itemCount }) {
   const router = useRouter();
   // Make CartButton disappear on Home, signup and signin
   const isHomePage = router.pathname === "/";
@@ -49,7 +49,7 @@ export default function Header() {
         {/* Make cart not display on homepage */}
         {!isHomePage && !isSignUpPage && !isSignInPage && (
           <Link href="/cart" className="navLink btn btn-ghost gap-2">
-            <CartButton itemCount={3} />
+            <CartButton itemCount={itemCount} />
           </Link>
         )}
       </div>

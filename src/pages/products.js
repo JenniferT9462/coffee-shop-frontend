@@ -47,7 +47,7 @@ export default function ProductsPage() {
     saveCartToLocalStorage(newCartContents);
   }
 
-  const allProducts = products.map((product) => {
+  const allProducts = products.map((product, idx) => {
     function addToCart() {
       alert(product.name + " Has Been Added to Your Cart!!!");
       // TODO: Add fetch to backend
@@ -66,7 +66,7 @@ export default function ProductsPage() {
 
     return (
       <ProductCard
-        key={product._id}
+        key={product._id + idx}
         product={product}
         onAddToCart={addToCart}
         onViewProduct={viewProduct}
@@ -76,7 +76,7 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <Header />
+      <Header itemCount={cartContents.length}/>
       <div className="p-4">
         <h1 className="text-3xl font-semibold text-center mb-8 text-primary">
           Products Page

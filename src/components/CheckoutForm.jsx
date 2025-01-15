@@ -5,7 +5,7 @@ import CartSummary from "./CartSummary";
 import Button from "./Button";
 import PropTypes from "prop-types";
 
-export default function CheckoutForm({ handleCheckout }) {
+export default function CheckoutForm({ cartContent, updateCart, handleCheckout }) {
   function handleSubmit(event) {
     // alert("Thank You for Your Patronage!");
     // console.log("Button has been clicked.");
@@ -52,7 +52,7 @@ export default function CheckoutForm({ handleCheckout }) {
         </div>
         {/* Right Section: Checkout Summary */}
         <div className="lg:col-span-1 flex flex-col items-center space-y-4">
-          <CartSummary />
+          <CartSummary cartContent={cartContent} updateCart={updateCart}/>
           {/* TODO: Add functionality for checkout */}
           <Button
             className="btn btn-primary"

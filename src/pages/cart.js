@@ -89,7 +89,7 @@ export default function CartPage() {
 
   return (
     <div className="text-primary">
-      <Header />
+      <Header itemCount={cartContent.length}/>
       <div className="container mx-auto p-4 text-primary">
         {/* Flex container for the cart and order summary */}
         <div className="flex flex-col md:flex-row gap-4 min-h-screen">

@@ -1,9 +1,24 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CheckoutForm from "@/components/CheckoutForm";
-import cart from "../../mocks/cart.json";
+// import cart from "../../mocks/cart.json";
+import { useState, useEffect } from "react";
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
 
 export default function CheckoutPage() {
+  const [cartContent, setCartContents] = useState([]);
+
+  useEffect(() => {
+    const cartData = loadCartFromLocalStorage();
+    console.log("Loaded cart data:", cartData); // Debug log
+    if (cartData) setCartContents(cartData);
+  }, []);
+
+  const updateCart = (newCart) => {
+    setCartContents(newCart);
+    saveCartToLocalStorage(newCart);
+  };
+
   function handleCheckout(
     name,
     email,
@@ -24,12 +39,14 @@ export default function CheckoutPage() {
         ". A confirmation email sent to: " +
         email
     );
+    // Clear the cart after checkout
+    updateCart([]);
     // TODO: send to server...
   }
 
   return (
     <div className="h-screen flex flex-col text-primary">
-      <Header />
+      <Header itemCount={cartContent.length} />
       <div className="container mx-auto flex-grow px-4">
         <h1 className="text-5xl text-center my-8">Checkout</h1>
         {/* DaisyUI Divider */}
@@ -45,7 +62,11 @@ export default function CheckoutPage() {
         </div>
 
         {/* Checkout Form Section */}
-        <CheckoutForm handleCheckout={handleCheckout} />
+        <CheckoutForm
+          cartContent={cartContent}
+          updateCart={updateCart}
+          handleCheckout={handleCheckout}
+        />
       </div>
       <Footer title={"Brew Haven"} />
     </div>
