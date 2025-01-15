@@ -1,7 +1,26 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
+import { useState } from "react";
 
 export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
+  const [passwordValue, setPasswordValue] = useState("");
+  const [passwordIsValid, setPasswordIsValid] = useState(false);
+
+  const onPasswordChange = (e) => {
+    if (checkPassword(e.target.value)) {
+      setPasswordIsValid(true);
+    } else {
+      setPasswordIsValid(false);
+    }
+    setPasswordValue(e.target.value);
+  }
+  function checkPassword(password) {
+    if (password.length > 8) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   return (
     <div className="hero bg-base-100 min-h-screen text-primary">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -45,6 +64,8 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
               <input
                 type="password"
                 placeholder="password"
+                value={passwordValue}
+                onChange={onPasswordChange}
                 className="input input-bordered"
                 required
               />
@@ -54,12 +75,14 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
                 </a>
               </label>
             </div>
+            <div className={ passwordIsValid ? "invisible text-xs" : "text-xs text-red-400"}>
+              Password must be at least 8 characters long.
+            </div>
             <div className="form-control mt-6">
               <Button
                 className="btn btn-primary"
                 label={buttonLabel}
                 handleClick={handleSignUp}
-                
               />
             </div>
           </form>
