@@ -1,63 +1,91 @@
 import Button from "@/components/Button";
-import data from "../../mocks/cart.json";
+// import data from "../../mocks/cart.json";
 import CartItem from "@/components/CartItem";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { loadCartFromLocalStorage, saveCartToLocalStorage } from '@/util';
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
 
 export default function CartPage() {
   const [cartContent, setCartContents] = useState([]);
 
-  const cartItems = data.items;
-
   useEffect(() => {
     const cartData = loadCartFromLocalStorage();
-    setCartContents(cartData)
-  }, [])
+    console.log("Loaded cart data:", cartData); // Debug log
+    if (cartData) setCartContents(cartData);
+  }, []);
 
-  const subTotals = cartItems.map((item) => {
-    return (
-      <div className="flex justify-between items-center mb-4 border-b pb-2">
-        <div className="flex flex-col">
-          <span className="font-bold">{item.name}</span>
-          <div className="text-sm text-gray-500">
-            {/* TODO: figure out how to implement this with real calculations */}
-            <span>{item.quantity} x </span>
-            <span>${item.price.toFixed(2)}</span>
-          </div>
-        </div>
-        
-        <span className="font-medium text-right">
-          {/* TODO: figure out how to implement this with real calculations */}
-          ${item.subtotal.toFixed(2)}
-        </span>
-      </div>
-    );
-  });
+  //For updates from the cart page 
+  const saveCart = (updatedCart) => {
+    setCartContents(updatedCart);
+    saveCartToLocalStorage(updatedCart);
+  };
+  const removeItem = (id) => {
+    const updatedCart = cartContent.filter((product) => product._id !== id);
+    setCartContents(updatedCart);
+    saveCartToLocalStorage(updatedCart);
+    alert("Item has been removed from the cart!");
+  };
 
-  const cartJSX = cartContent.map((product, idx) => {
-    function removeItem() {
-      alert(product.name + " Has Been Removed From Cart!");
-    }
-    return (
-      <CartItem 
-        key={product._id + idx} 
-        product={product} 
-        removeItem={removeItem} />
+  const updateQuantity = (id, delta) => {
+    const updatedCart = cartContent.map((product) => {
+      if (product._id === id) {
+        const newQuantity = (product.quantity || 1) + delta;
+        return { ...product, quantity: Math.max(newQuantity, 1) }; // Ensure quantity is at least 1
+      }
+      return product;
+    });
+    // saveCart(updatedCart);
+    setCartContents(updatedCart);
+    saveCartToLocalStorage(updatedCart);
+  };
+
+  const calculateSubTotal = () => {
+    return cartContent.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
     );
-  });
+  };
+  
+  const calculateTotalPrice = () =>
+    cartContent.reduce(
+      (total, product) => total + Number(product.price) * Number(product.quantity),
+      0
+    );
+  // const subTotals = cartItems.map((item) => {
+  //   return (
+  //     <div className="flex justify-between items-center mb-4 border-b pb-2">
+  //       <div className="flex flex-col">
+  //         <span className="font-bold">{item.name}</span>
+  //         <div className="text-sm text-gray-500">
+  //           {/* TODO: figure out how to implement this with real calculations */}
+  //           <span>{item.quantity} x </span>
+  //           <span>${item.price.toFixed(2)}</span>
+  //         </div>
+  //       </div>
+
+  //       <span className="font-medium text-right">
+  //         {/* TODO: figure out how to implement this with real calculations */}$
+  //         {item.subtotal.toFixed(2)}
+  //       </span>
+  //     </div>
+  //   );
+  // });
+  const cartJSX = cartContent.map((product, idx) => (
+    <CartItem
+      key={product._id + idx}
+      product={product}
+      updateQuantity={updateQuantity}
+      removeItem={() => removeItem(product._id)}
+    />
+  ));
+
   const router = useRouter();
   function checkout() {
     alert("Proceeding to Checkout!");
     router.push("/checkout");
   }
- 
-  // Stub functions for Cart Page
-  const loadCart = () => console.log("Cart loaded");
-  const saveCartToLocalStorage = (cart) =>
-    console.log("Cart saved to localStorage");
 
   return (
     <div className="text-primary">
@@ -76,12 +104,12 @@ export default function CartPage() {
             <h2 className="text-xl font-semibold mb-6 border-b pb-2">
               Order Summary
             </h2>
-            {subTotals}
+            {/* {subTotals} */}
             <div className="divider divider-primary divider-end"></div>
             <div className="flex justify-between text-lg font-bold mb-6">
               <span>Total Price:</span>
               {/* TODO: Add function to calculate total */}
-              <span>${data.totalPrice.toFixed(2)}</span>
+              <span>${calculateTotalPrice().toFixed(2)}</span>
             </div>
             <Button
               label="Proceed to Checkout"
