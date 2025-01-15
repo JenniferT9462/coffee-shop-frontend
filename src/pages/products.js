@@ -1,16 +1,57 @@
-import products from "../../mocks/products.json";
+import data from "../../mocks/products.json";
 import ProductCard from "@/components/ProductCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from '@/util';
 
 export default function ProductsPage() {
   const router = useRouter();
+  const [products, setProducts] = useState([]);
+  const [cartContents, setCartContents] = useState([]);
+  const { category } = router.query; 
+  //Load cart from local storage
+  useEffect(() => {
+    const cartData = loadCartFromLocalStorage();
+    setCartContents(cartData);
+    setProducts(data)
+  }, [])
+
+  // Filter products based on category
+  useEffect(() => {
+    if (category) {
+      const filteredProducts = data.filter(
+        (product) => product.category === category
+      );
+      setProducts(filteredProducts);
+    } else {
+      // If no category, show all products
+      setProducts(data);
+    }
+  }, [category]);
+
+  
+  // useEffect(() => {
+  //   console.log(category);
+  //   const filterProductsData = data.filter(product => {
+  //     console.log(data.category);
+  //     return product.category === category;
+  //   })
+  //   setProducts(filterProductsData)
+  // }, [category]);
+
+  function addProductToCart(product) {
+    const newCartContents = [...cartContents, product];
+    setCartContents(newCartContents);
+    saveCartToLocalStorage(newCartContents);
+  }
 
   const allProducts = products.map((product) => {
     function addToCart() {
       alert(product.name + " Has Been Added to Your Cart!!!");
       // TODO: Add fetch to backend
+      addProductToCart(product);
     }
 
     // Redirect to product/[id].js with template literal to pass a js variable
@@ -21,7 +62,7 @@ export default function ProductsPage() {
     // Stub functions for the ProductsPage
     const loadProducts = () => console.log("Loading Products...");
     const filterProducts = (category, start, limit) => console.log("Filtered List of Products...");
-    const viewProduct2 = (product) => console.log("Viewing Product...");
+    
 
     return (
       <ProductCard
