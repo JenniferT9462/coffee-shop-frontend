@@ -1,8 +1,27 @@
-
-// Stub functions for utilities
-const loadProductsFromLocalStorage = () => console.log("Loading Products from Local Storage...");
-const loadCartFromLocalStorage = () => console.log("Loading Cart from Local Storage...") 
-const saveCartToLocalStorage = () => console.log("Saving Cart to Local Storage...");
-const saveProductsToLocalStorage = () => console.log("Saving Products to Local Storage...");
-const saveUserToLocalStorage = () => console.log("Saving User to Local Storage...");
-const loginUserToLocalStorage = () => console.log("Logging In User to Local Storage...");
+// src/util/index.js
+export const loadProductsFromLocalStorage = () => {
+    const products = localStorage.getItem('products');
+    return products ? JSON.parse(products) : [];
+  };
+  
+  export const loadCartFromLocalStorage = () => {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : [];
+  };
+  
+  export const saveCartToLocalStorage = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
+  
+  export const saveProductsToLocalStorage = (products) => {
+    localStorage.setItem('products', JSON.stringify(products));
+  };
+  
+  export const saveUserToLocalStorage = (user) => {
+    localStorage.setItem('user', JSON.stringify(user));
+  };
+  
+  export const loginUserToLocalStorage = (user) => {
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+  };
+  
