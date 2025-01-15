@@ -1,37 +1,51 @@
 import Button from "@/components/Button";
-import cart from "../../mocks/cart.json";
+import data from "../../mocks/cart.json";
 import CartItem from "@/components/CartItem";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
-
+import { useState, useEffect } from "react";
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from '@/util';
 
 export default function CartPage() {
-  const cartContent = cart.items;
+  const [cartContent, setCartContents] = useState([]);
 
-  const subTotals = cartContent.map((item) => {
+  const cartItems = data.items;
+
+  useEffect(() => {
+    const cartData = loadCartFromLocalStorage();
+    setCartContents(cartData)
+  }, [])
+
+  const subTotals = cartItems.map((item) => {
     return (
       <div className="flex justify-between items-center mb-4 border-b pb-2">
         <div className="flex flex-col">
           <span className="font-bold">{item.name}</span>
           <div className="text-sm text-gray-500">
+            {/* TODO: figure out how to implement this with real calculations */}
             <span>{item.quantity} x </span>
             <span>${item.price.toFixed(2)}</span>
           </div>
         </div>
+        
         <span className="font-medium text-right">
+          {/* TODO: figure out how to implement this with real calculations */}
           ${item.subtotal.toFixed(2)}
         </span>
       </div>
     );
   });
 
-  const cartJSX = cartContent.map((product) => {
+  const cartJSX = cartContent.map((product, idx) => {
     function removeItem() {
       alert(product.name + " Has Been Removed From Cart!");
     }
     return (
-      <CartItem key={product._id} product={product} removeItem={removeItem} />
+      <CartItem 
+        key={product._id + idx} 
+        product={product} 
+        removeItem={removeItem} />
     );
   });
   const router = useRouter();
@@ -39,13 +53,9 @@ export default function CartPage() {
     alert("Proceeding to Checkout!");
     router.push("/checkout");
   }
-
-  
+ 
   // Stub functions for Cart Page
   const loadCart = () => console.log("Cart loaded");
-  const addToCart = (product) => console.log(`Added ${product.name} to cart`);
-  const removeFromCart = (product) =>
-    console.log(`Removed ${product.name} from cart`);
   const saveCartToLocalStorage = (cart) =>
     console.log("Cart saved to localStorage");
 
@@ -71,7 +81,7 @@ export default function CartPage() {
             <div className="flex justify-between text-lg font-bold mb-6">
               <span>Total Price:</span>
               {/* TODO: Add function to calculate total */}
-              <span>${cart.totalPrice.toFixed(2)}</span>
+              <span>${data.totalPrice.toFixed(2)}</span>
             </div>
             <Button
               label="Proceed to Checkout"
