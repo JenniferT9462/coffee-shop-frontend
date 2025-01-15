@@ -10,13 +10,24 @@ export const loadProductsFromLocalStorage = () => {
   // };
 
   export function loadCartFromLocalStorage() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    return cart.map((product) => ({
-      ...product,
-      price: Number(product.price) || 0, // Ensure price is a number, default to 0 if invalid
-      quantity: Number(product.quantity) || 1, // Ensure quantity is a number, default to 1 if invalid
-    }));
-  }
+    try {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (!Array.isArray(cart)) {
+        console.error("Cart in localstorage is not an array. Resetting cart.");
+        return [];
+      }
+      return cart.map((product) => ({
+        ...product,
+        cartItemId: product.cartItemId || uuidv4(),
+        price: Number(product.price) || 0, // Ensure price is a number, default to 0 if invalid
+        quantity: Number(product.quantity) || 1, // Ensure quantity is a number, default to 1 if invalid
+      }));
+    }
+    catch (error) {
+      console.error("Error loading cart from localstorage", error);
+      return [];
+    }
+  } 
   
   export const saveCartToLocalStorage = (cart) => {
     localStorage.setItem('cart', JSON.stringify(cart));

@@ -6,8 +6,8 @@ import CartItem from "./CartItem";
 // import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
 
 export default function CartSummary({ cartContent, updateCart }) {
-  const removeItem = (id) => {
-    const updatedCart = cartContent.filter((product) => product._id !== id);
+  const removeItem = (cartItemId) => {
+    const updatedCart = cartContent.filter((product) => product.cartItemId !== cartItemId);
     // setCartContents(updatedCart);
     // saveCartToLocalStorage(updatedCart);
     alert("Item has been removed from the cart!");
@@ -40,7 +40,7 @@ export default function CartSummary({ cartContent, updateCart }) {
         key={product._id}
         product={product}
         updateQuantity={updateQuantity}
-        removeItem={() => removeItem(product._id)}
+        removeItem={() => removeItem(product.cartItemId)}
       />
     ));
 

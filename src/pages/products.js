@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from '@/util';
+import { v4 as uuidv4 } from "uuid";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -42,7 +43,8 @@ export default function ProductsPage() {
   // }, [category]);
 
   function addProductToCart(product) {
-    const newCartContents = [...cartContents, product];
+    const productWithId = { ...product, cartItemId: uuidv4() };
+    const newCartContents = [...cartContents, productWithId];
     setCartContents(newCartContents);
     saveCartToLocalStorage(newCartContents);
   }

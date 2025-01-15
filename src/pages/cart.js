@@ -21,8 +21,8 @@ export default function CartPage() {
     setCartContents(updatedCart);
     saveCartToLocalStorage(updatedCart);
   };
-  const removeItem = (id) => {
-    const updatedCart = cartContent.filter((product) => product._id !== id);
+  const removeItem = (cartItemId) => {
+    const updatedCart = cartContent.filter((product) => product.cartItemId !== cartItemId);
     setCartContents(updatedCart);
     saveCartToLocalStorage(updatedCart);
     alert("Item has been removed from the cart!");
@@ -77,7 +77,7 @@ export default function CartPage() {
       key={product._id + idx}
       product={product}
       updateQuantity={updateQuantity}
-      removeItem={() => removeItem(product._id)}
+      removeItem={() => removeItem(product.cartItemId)}
     />
   ));
 
