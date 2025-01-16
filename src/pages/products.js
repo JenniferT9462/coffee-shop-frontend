@@ -43,7 +43,7 @@ export default function ProductsPage() {
   // }, [category]);
 
   function addProductToCart(product) {
-    const productWithId = { ...product, cartItemId: uuidv4() };
+    const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
     const newCartContents = [...cartContents, productWithId];
     setCartContents(newCartContents);
     saveCartToLocalStorage(newCartContents);

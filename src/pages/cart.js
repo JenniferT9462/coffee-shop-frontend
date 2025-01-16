@@ -41,11 +41,8 @@ export default function CartPage() {
     saveCartToLocalStorage(updatedCart);
   };
 
-  const calculateSubTotal = () => {
-    return cartContent.reduce(
-      (total, product) => total + product.price * product.quantity,
-      0
-    );
+  const calculateSubTotal = (product) => {
+    return product.quantity * product.price;
   };
   
   const calculateTotalPrice = () =>
@@ -53,25 +50,25 @@ export default function CartPage() {
       (total, product) => total + Number(product.price) * Number(product.quantity),
       0
     );
-  // const subTotals = cartItems.map((item) => {
-  //   return (
-  //     <div className="flex justify-between items-center mb-4 border-b pb-2">
-  //       <div className="flex flex-col">
-  //         <span className="font-bold">{item.name}</span>
-  //         <div className="text-sm text-gray-500">
-  //           {/* TODO: figure out how to implement this with real calculations */}
-  //           <span>{item.quantity} x </span>
-  //           <span>${item.price.toFixed(2)}</span>
-  //         </div>
-  //       </div>
+  const subTotals = cartContent.map((item) => {
+    return (
+      <div className="flex justify-between items-center mb-4 border-b pb-2">
+        <div className="flex flex-col">
+          <span className="font-bold">{item.name}</span>
+          <div className="text-sm text-gray-500">
+            {/* TODO: figure out how to implement this with real calculations */}
+            <span>{item.quantity} x </span>
+            <span>${item.price.toFixed(2)}</span>
+          </div>
+        </div>
 
-  //       <span className="font-medium text-right">
-  //         {/* TODO: figure out how to implement this with real calculations */}$
-  //         {item.subtotal.toFixed(2)}
-  //       </span>
-  //     </div>
-  //   );
-  // });
+        <span className="font-medium text-right">
+          {/* TODO: figure out how to implement this with real calculations */}$
+          {calculateSubTotal(item).toFixed(2)}
+        </span>
+      </div>
+    );
+  });
   const cartJSX = cartContent.map((product, idx) => (
     <CartItem
       key={product._id + idx}
@@ -104,7 +101,7 @@ export default function CartPage() {
             <h2 className="text-xl font-semibold mb-6 border-b pb-2">
               Order Summary
             </h2>
-            {/* {subTotals} */}
+            {subTotals}
             <div className="divider divider-primary divider-end"></div>
             <div className="flex justify-between text-lg font-bold mb-6">
               <span>Total Price:</span>
