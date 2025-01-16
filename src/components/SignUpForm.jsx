@@ -2,7 +2,15 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 import { useState } from "react";
 
-export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
+function checkPassword(password) {
+  if (password.length > 8) {
+    return true;
+  } else {
+    return false;
+  }
+}
+// Custom Hook
+const usePasswordInput = (e) => {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState(false);
 
@@ -12,15 +20,29 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
     } else {
       setPasswordIsValid(false);
     }
+    console.log(e.target.value);
     setPasswordValue(e.target.value);
-  }
-  function checkPassword(password) {
-    if (password.length > 8) {
-      return true;
+  };
+  return { passwordValue, passwordIsValid, onPasswordChange };
+};
+
+export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
+  const { passwordValue, passwordIsValid, onPasswordChange } =
+    usePasswordInput();
+
+  const [emailValue, setEmailValue] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState(false);
+
+  function onEmailChange(event) {
+    const newEmailValue = event.target.value;
+    if (newEmailValue.includes("@")) {
+      setEmailIsValid(true);
     } else {
-      return false;
+      setEmailIsValid(false);
     }
+    setEmailValue(event.target.value);
   }
+
   return (
     <div className="hero bg-base-100 min-h-screen text-primary">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -52,15 +74,26 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="email"
                 className="input input-bordered"
+                onChange={onEmailChange}
+                value={emailValue}
                 required
               />
+            </div>
+            <div
+              className={
+                emailIsValid ? "invisible text-xs" : "text-xs text-red-400"
+              }
+            >
+              Supply a valid email address.
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
+
               <input
                 type="password"
                 placeholder="password"
@@ -69,13 +102,18 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
                 className="input input-bordered"
                 required
               />
-              <label className="label">
+
+              {/* <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
                   Forgot password?
                 </a>
-              </label>
+              </label> */}
             </div>
-            <div className={ passwordIsValid ? "invisible text-xs" : "text-xs text-red-400"}>
+            <div
+              className={
+                passwordIsValid ? "invisible text-xs" : "text-xs text-red-400"
+              }
+            >
               Password must be at least 8 characters long.
             </div>
             <div className="form-control mt-6">
