@@ -20,6 +20,9 @@ export default function ProductsPage() {
 
   console.log(category);
 
+  // Define categories
+  const categories = ["All", "Beverages", "Bakery", "Merch"];
+
   async function fetchProducts() {
     const url = `${BACKEND_URL}/products`;
     try {
@@ -41,6 +44,15 @@ export default function ProductsPage() {
     }
   }
 
+  async function fetchFilteredProducts(category) {
+    const url = `${BACKEND_URL}/products?category=${category}`;
+    setProductsLoading(true);
+    const result = await fetch(url);
+    const productData = await result.json();
+    setProductsLoading(false);
+    setProducts(productData.products);
+  }
+
   useEffect(() => {
     // Load cart from local storage
     const cartData = loadCartFromLocalStorage(); // get data from outside the component
@@ -51,15 +63,6 @@ export default function ProductsPage() {
   }, []);
 
   console.log(products);
-
-  async function fetchFilteredProducts(category) {
-    const url = `${BACKEND_URL}/products?category=${category}`;
-    setProductsLoading(true);
-    const result = await fetch(url);
-    const productData = await result.json();
-    setProductsLoading(false);
-    setProducts(productData.products);
-  }
 
   // Filter products based on category
   useEffect(() => {
@@ -72,6 +75,15 @@ export default function ProductsPage() {
       fetchProducts();
     }
   }, [category]);
+
+  function handleCategoryClick(selectedCategory) {
+    router.push({
+      pathname: "/products",
+      query: {
+        category: selectedCategory === "All" ? undefined : selectedCategory,
+      },
+    });
+  }
 
   function addProductToCart(product) {
     const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
@@ -100,16 +112,6 @@ export default function ProductsPage() {
     );
   });
 
-  // Handle category button click
-  // function handleCategoryClick(selectedCategory) {
-  //   router.push({
-  //     pathname: "/products",
-  //     query: {
-  //       category: selectedCategory === "All" ? undefined : selectedCategory,
-  //     },
-  //   });
-  // }
-
   return (
     <div>
       <Header itemCount={cartContents.length} />
@@ -119,13 +121,13 @@ export default function ProductsPage() {
         </h1>
 
         {/* Category Filter Buttons */}
-        {/* <div className="mb-8 flex flex-wrap justify-center gap-4">
+        <div className="mb-8 flex flex-wrap justify-center gap-4">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => handleCategoryClick(cat)}
               className={`px-4 py-2 rounded ${
-                category === cat 
+                category === cat || (cat === "All" && !category)
                   ? "bg-primary text-base-100"
                   : "bg-info text-primary"
               }`}
@@ -133,7 +135,8 @@ export default function ProductsPage() {
               {cat}
             </button>
           ))}
-        </div> */}
+        </div>
+
         {productFetchError ? (
           <div className="text-red-400 text-lg">Error fetching products.</div>
         ) : (
