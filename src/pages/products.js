@@ -50,13 +50,15 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
+  console.log(products);
+
   async function fetchFilteredProducts(category) {
     const url = `${BACKEND_URL}/products?category=${category}`;
     setProductsLoading(true);
     const result = await fetch(url);
     const productData = await result.json();
     setProductsLoading(false);
-    setProducts(productData);
+    setProducts(productData.products);
   }
 
   // Filter products based on category
@@ -78,27 +80,25 @@ export default function ProductsPage() {
     saveCartToLocalStorage(newCartContents);
   }
 
-  const allProducts = Array.isArray(products)
-    ? products.map((product, idx) => {
-        function addToCart() {
-          alert(product.name + " Has Been Added to Your Cart!!!");
-          // TODO: Add fetch to backend
-          addProductToCart(product);
-        }
-        // Redirect to product/[id].js with template literal to pass a js variable
-        function viewProduct() {
-          router.push(`/product/${product._id}`);
-        }
-        return (
-          <ProductCard
-            key={product._id + idx}
-            product={product}
-            onAddToCart={addToCart}
-            onViewProduct={viewProduct}
-          />
-        );
-      })
-    : [];
+  const allProducts = products.map((product, idx) => {
+    function addToCart() {
+      alert(product.name + " Has Been Added to Your Cart!!!");
+      // TODO: Add fetch to backend
+      addProductToCart(product);
+    }
+    // Redirect to product/[id].js with template literal to pass a js variable
+    function viewProduct() {
+      router.push(`/product/${product._id}`);
+    }
+    return (
+      <ProductCard
+        key={product._id + idx}
+        product={product}
+        onAddToCart={addToCart}
+        onViewProduct={viewProduct}
+      />
+    );
+  });
 
   // Handle category button click
   // function handleCategoryClick(selectedCategory) {
@@ -134,15 +134,21 @@ export default function ProductsPage() {
             </button>
           ))}
         </div> */}
+        {productFetchError ? (
+          <div className="text-red-400 text-lg">Error fetching products.</div>
+        ) : (
+          ""
+        )}
+
         <div>
-          {products.length > 0 ? (
+          {productsLoading ? (
+            <div className="flex justify-center">
+              <span className="loading loading-dots loading-lg"></span>
+            </div>
+          ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {allProducts}
             </div>
-          ) : (
-            <p className="text-center text-lg">
-              No products available at the moment.
-            </p>
           )}
         </div>
       </div>
