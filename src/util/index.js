@@ -1,4 +1,7 @@
 // src/util/index.js
+import { v4 as uuidv4 } from "uuid";
+
+
 export const loadProductsFromLocalStorage = () => {
     const products = localStorage.getItem('products');
     return products ? JSON.parse(products) : [];
