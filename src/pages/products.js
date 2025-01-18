@@ -1,4 +1,4 @@
-// import data from "../../mocks/products.json";
+
 import ProductCard from "@/components/ProductCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
