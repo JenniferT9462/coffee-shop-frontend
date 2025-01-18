@@ -52,7 +52,7 @@ export default function CartPage() {
     );
   const subTotals = cartContent.map((item) => {
     return (
-      <div className="flex justify-between items-center mb-4 border-b pb-2">
+      <div key={item.cartItemId} className="flex justify-between items-center mb-4 border-b pb-2">
         <div className="flex flex-col">
           <span className="font-bold">{item.name}</span>
           <div className="text-sm text-gray-500">
