@@ -10,7 +10,7 @@ function checkPassword(password) {
   }
 }
 // Custom Hook
-const usePasswordInput = (e) => {
+function usePasswordInput() {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState(false);
 
@@ -30,6 +30,21 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
   const { passwordValue, passwordIsValid, onPasswordChange } =
     usePasswordInput();
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Form submitted")
+    const user = {
+      name: e.target.elements.name.value,
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value,
+    }
+    console.log(user);
+    if (passwordIsValid) {
+      handleSignUp(user);
+    } else {
+      alert("Password must be at least 8 characters long.")
+    }
+  }
   const [emailValue, setEmailValue] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(false);
 
@@ -66,14 +81,15 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form className="card-body">
+          <form className="card-body" onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
               </label>
               <input
-                type="name"
+                type="text"
                 placeholder="name"
+                name="name"
                 className="input input-bordered"
                 required
               />
@@ -106,6 +122,7 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
 
               <input
                 type="password"
+                name="password"
                 placeholder="password"
                 value={passwordValue}
                 onChange={onPasswordChange}
@@ -130,7 +147,8 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
               <Button
                 className="btn btn-primary"
                 label={buttonLabel}
-                handleClick={handleSignUp}
+                type="submit"
+                // handleSignUp={handleSignUp}
               />
             </div>
           </form>
@@ -143,4 +161,5 @@ export default function SignUpForm({ buttonLabel, title, handleSignUp }) {
 SignUpForm.propTypes = {
   title: PropTypes.string.isRequired,
   buttonLabel: PropTypes.string.isRequired,
+  handleLogin: PropTypes.func.isRequired,
 };
