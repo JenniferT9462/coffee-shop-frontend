@@ -35,9 +35,9 @@ export default function CartSummary({ cartContent, updateCart }) {
       0
     );
 
-    const cartJSX = cartContent.map((product) => (
+    const cartJSX = cartContent.map((product, idx) => (
       <CartItem
-        key={product._id}
+        key={product._id + idx}
         product={product}
         updateQuantity={updateQuantity}
         removeItem={() => removeItem(product.cartItemId)}

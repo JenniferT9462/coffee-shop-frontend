@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import CheckoutForm from "@/components/CheckoutForm";
 // import cart from "../../mocks/cart.json";
 import { useState, useEffect } from "react";
-import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
+import { loadCartFromLocalStorage, saveCartToLocalStorage, saveOrderToLocalStorage } from "@/util";
 
 export default function CheckoutPage() {
   const [cartContent, setCartContents] = useState([]);
@@ -31,13 +31,23 @@ export default function CheckoutPage() {
     exDate,
     cvv
   ) {
+    const orderDetails = {
+      name,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zipcode,
+      cart: cartContent,
+      paymentInfo: { cardNumber, exDate, cvv},
+    };
+
+    // Save to localStorage
+    saveOrderToLocalStorage(orderDetails);
     alert(
-      "Checkout clicked! Thank you, " +
-        name +
-        " Your order will be shipped to: " +
-        address +
-        ". A confirmation email sent to: " +
-        email
+      `Checkout clicked! Thank you,  
+        ${name}! Your order will be shipped to: ${address}. A confirmation email sent to: ${email}`
     );
     // Clear the cart after checkout
     updateCart([]);

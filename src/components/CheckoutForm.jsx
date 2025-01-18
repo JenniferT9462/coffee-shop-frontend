@@ -4,11 +4,9 @@ import PaymentDetails from "./PaymentDetails";
 import CartSummary from "./CartSummary";
 import Button from "./Button";
 import PropTypes from "prop-types";
-
 export default function CheckoutForm({ cartContent, updateCart, handleCheckout }) {
   function handleSubmit(event) {
-    // alert("Thank You for Your Patronage!");
-    // console.log("Button has been clicked.");
+    
     event.preventDefault();
     const name = event.target.elements.name.value;
     const email = event.target.elements.email.value;
@@ -35,6 +33,8 @@ export default function CheckoutForm({ cartContent, updateCart, handleCheckout }
       exDate,
       cvv,
     );
+    // Reset the form after submission
+    event.target.reset();
   }
   return (
     <>
