@@ -1,7 +1,17 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
+import { useState } from "react";
 
 export default function SignUpForm({ buttonLabel, title, handleSignIn }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    handleSignIn(email, password);
+  };
+
+
   return (
     <div className="hero bg-base-100 min-h-screen text-primary">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -10,15 +20,18 @@ export default function SignUpForm({ buttonLabel, title, handleSignIn }) {
           <p className="py-6">Sign In Now to order online.</p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form className="card-body">
+          <form className="card-body" onSubmit={onSubmit}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="email"
                 className="input input-bordered"
+                value={email || ""}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -28,8 +41,11 @@ export default function SignUpForm({ buttonLabel, title, handleSignIn }) {
               </label>
               <input
                 type="password"
+                name="password"
                 placeholder="password"
                 className="input input-bordered"
+                value={password || ""}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <label className="label">
@@ -42,7 +58,7 @@ export default function SignUpForm({ buttonLabel, title, handleSignIn }) {
               <Button
                 className="btn btn-primary"
                 label={buttonLabel}
-                handleClick={handleSignIn}
+                handleClick={onSubmit}
               />
             </div>
           </form>
