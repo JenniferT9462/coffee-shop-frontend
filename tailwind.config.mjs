@@ -28,7 +28,9 @@ export default {
           "error": "#AF4035",
           },
         },
+        "coffee",
       ],
+      
     },
   plugins: [require("daisyui")],
 };
