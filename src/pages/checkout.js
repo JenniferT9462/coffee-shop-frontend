@@ -3,10 +3,15 @@ import Footer from "@/components/Footer";
 import CheckoutForm from "@/components/CheckoutForm";
 // import cart from "../../mocks/cart.json";
 import { useState, useEffect } from "react";
-import { loadCartFromLocalStorage, saveCartToLocalStorage, saveOrderToLocalStorage } from "@/util";
+import {
+  loadCartFromLocalStorage,
+  saveCartToLocalStorage,
+  saveOrderToLocalStorage,
+} from "@/util";
 
 export default function CheckoutPage() {
   const [cartContent, setCartContents] = useState([]);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     const cartData = loadCartFromLocalStorage();
@@ -40,15 +45,21 @@ export default function CheckoutPage() {
       state,
       zipcode,
       cart: cartContent,
-      paymentInfo: { cardNumber, exDate, cvv},
+      paymentInfo: { cardNumber, exDate, cvv },
     };
 
     // Save to localStorage
     saveOrderToLocalStorage(orderDetails);
-    alert(
-      `Checkout clicked! Thank you,  
-        ${name}! Your order will be shipped to: ${address}. A confirmation email sent to: ${email}`
-    );
+    // alert(
+    //   `Checkout clicked! Thank you,
+    //     ${name}! Your order will be shipped to: ${address}. A confirmation email sent to: ${email}`
+    // );
+
+    // Show DaisyUI alert
+    setAlert({
+      type: "success",
+      message: `Thank you, ${name}! Your order will be shipped to ${address}. A confirmation email has been sent to ${email}.`,
+    });
     // Clear the cart after checkout
     updateCart([]);
     // TODO: send to server...
@@ -70,6 +81,26 @@ export default function CheckoutPage() {
             <li className="step">Review</li>
           </ul>
         </div>
+
+        {/* Render Alert */}
+        {alert && (
+          <div role="alert" className={`alert alert-${alert.type} || alert-success`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>{alert.message}</span>
+          </div>
+        )}
 
         {/* Checkout Form Section */}
         <CheckoutForm
