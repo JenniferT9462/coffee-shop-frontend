@@ -29,7 +29,7 @@ export default function signin() {
         localStorage.setItem("authToken", data.token);
 
         // May redirect to a dashboard
-        router.push('/products');
+        router.push('/dashboard');
       } else {
         console.error("Login failed:", response.statusText);
         alert("Invalid email or password. Please try again.");

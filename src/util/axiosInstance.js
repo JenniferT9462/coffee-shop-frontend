@@ -7,4 +7,16 @@ const api = axios.create({
     },
 });
 
+// Add interceptor to include token in Authorization header
+api.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem('authToken'); // Get token from localStorage
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+
 export default api;
