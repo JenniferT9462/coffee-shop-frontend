@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
 import { v4 as uuidv4 } from "uuid";
-import { useFetch } from "@/hooks/api";
+import { useAuthFetch } from "@/hooks/api";
+import useAuth from "@/hooks/auth";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
@@ -18,8 +19,15 @@ export default function ProductsPage() {
 
   console.log(category);
 
+  const { token } = useAuth();
+  console.log(token);
+
   const [url, setUrl] = useState(`${BACKEND_URL}/products`);
-  const [productFetchError, productsLoading, products] = useFetch(url, []);
+  const [productFetchError, productsLoading, products] = useAuthFetch(
+    url,
+    [],
+    token
+  );
 
   // Define categories
   const categories = ["All", "Beverages", "Bakery", "Merch"];
