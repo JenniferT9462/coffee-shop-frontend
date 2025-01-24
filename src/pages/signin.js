@@ -25,11 +25,18 @@ export default function signin() {
         const data = await response.json();
         console.log("Login successful:", data);
 
+        const userData = {
+          token: data.token,
+          userId: data.userId,
+        }
+
         // Store token or user data if necessary
-        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("user", JSON.stringify(userData.userId));
+        localStorage.setItem("token", JSON.stringify(userData.token));
 
         // May redirect to a dashboard
-        router.push('/dashboard');
+        router.push('/products');
+        alert("You are signed in!")
       } else {
         console.error("Login failed:", response.statusText);
         alert("Invalid email or password. Please try again.");
