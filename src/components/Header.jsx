@@ -1,15 +1,86 @@
 import Link from "next/link";
-import { FaSignInAlt, FaCoffee } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt, FaCoffee, FaTools } from "react-icons/fa";
 import CartButton from "./CartButton";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 // import ThemeController from "./ThemeController";
+import useAuth from "@/hooks/auth";
 
 export default function Header({ itemCount }) {
-  const router = useRouter();
-  // Make CartButton disappear on Home, signup and signin
-  const isHomePage = router.pathname === "/";
-  const isSignUpPage = router.pathname === "/signup";
-  const isSignInPage = router.pathname === "/signin";
+  const { user } = useAuth();
+
+  let menuItemsJSX;
+
+  if (user && user.role === "user") {
+    menuItemsJSX = (
+      <>
+        <li>
+          <Link href="/products" className="navLink btn btn-ghost gap-2">
+            <FaCoffee />
+            Products
+          </Link>
+        </li>
+        <li>
+          <Link href="/cart" className="navLink btn btn-ghost gap-2">
+            <CartButton itemCount={itemCount} />
+          </Link>
+        </li>
+        {/* TODO: Logout */}
+        <li>
+          <Link href="/" className="navLink btn btn-ghost gap-2">
+            <FaSignOutAlt />
+            Logout
+          </Link>
+        </li>
+      </>
+    );
+  } else if (user && user.role === "admin") {
+    menuItemsJSX = (
+      <>
+        <li>
+          <Link href="/admin/create" className="navLink btn btn-ghost gap-2">
+            <FaCoffee />
+            Create Product
+          </Link>
+        </li>
+        <li>
+          <Link href="/admin" className="navLink btn btn-ghost gap-2">
+            <FaTools />
+            Admin Functions
+          </Link>
+        </li>
+        {/* TODO: Logout */}
+        <li>
+          <Link href="/" className="navLink btn btn-ghost gap-2">
+            <FaSignOutAlt />
+            Logout
+          </Link>
+        </li>
+      </>
+    );
+  } else {
+    menuItemsJSX = (
+      <>
+        <li>
+          <Link href="/products" className="navLink btn btn-ghost gap-2">
+            <FaCoffee />
+            Products
+          </Link>
+        </li>
+        <li>
+          <Link href="/signin" className="navLink btn btn-ghost gap-2">
+            <FaSignInAlt />
+            Sign In
+          </Link>
+        </li>
+      </>
+    );
+  }
+
+  // const router = useRouter();
+  // // Make CartButton disappear on Home, signup and signin
+  // const isHomePage = router.pathname === "/";
+  // const isSignUpPage = router.pathname === "/signup";
+  // const isSignInPage = router.pathname === "/signin";
 
   // Stub function for signin
   const goToLogin = () => console.log("Navigate to Login Page");
@@ -38,20 +109,11 @@ export default function Header({ itemCount }) {
 
       {/* Navigation Links */}
       <div className="flex-1 justify-end space-x-4">
-        <Link href="/products" className="navLink btn btn-ghost gap-2">
-          <FaCoffee />
-          Products
-        </Link>
-        <Link href="/signin" className="navLink btn btn-ghost gap-2">
-          <FaSignInAlt />
-          Sign In
-        </Link>
+        <ul className="menu menu-horizontal px-1">{menuItemsJSX}</ul>
         {/* Make cart not display on homepage */}
-        {!isHomePage && !isSignUpPage && !isSignInPage && (
-          <Link href="/cart" className="navLink btn btn-ghost gap-2">
-            <CartButton itemCount={itemCount} />
-          </Link>
-        )}
+        {/* {!isHomePage && !isSignUpPage && !isSignInPage && (
+        
+        )} */}
       </div>
     </div>
   );
