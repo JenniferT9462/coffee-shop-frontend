@@ -13,6 +13,8 @@ export default function useAuth() {
         setToken(t);
         // ?? How to set isAuthenticated ??
         setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
 
     const u = localStorage.getItem("user");
@@ -32,9 +34,19 @@ export default function useAuth() {
       } 
     } else {
         console.warn("⚠️ No user data found in localStorage.");
+        setUser(null)
     }
     
     }, []);
 
-  return { user, token, isAuthenticated };
+    // Function to clear auth data manually (e.g., after logout)
+    const clearAuth = () => {
+      setUser(null);
+      setToken(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    };
+
+  return { user, token, isAuthenticated, clearAuth };
 }

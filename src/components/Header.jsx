@@ -1,12 +1,21 @@
 import Link from "next/link";
 import { FaSignInAlt, FaSignOutAlt, FaCoffee, FaTools } from "react-icons/fa";
 import CartButton from "./CartButton";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 // import ThemeController from "./ThemeController";
 import useAuth from "@/hooks/auth";
 
 export default function Header({ itemCount }) {
-  const { user } = useAuth();
+  const { user, setUser, clearAuth } = useAuth();
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    console.log("Logout button clicked!"); // Debugging log
+
+    clearAuth(); // Clear auth state and localStorage
+    router.push("/signin"); // Ensure navigation updates properly
+  };
 
   let menuItemsJSX;
 
@@ -26,10 +35,14 @@ export default function Header({ itemCount }) {
         </li>
         {/* TODO: Logout */}
         <li>
-          <Link href="/" className="navLink btn btn-ghost gap-2">
+        <button
+            type="button"
+            onClick={handleLogout}
+            className="btn btn-ghost gap-2"
+          >
             <FaSignOutAlt />
             Logout
-          </Link>
+          </button>
         </li>
       </>
     );
@@ -50,10 +63,14 @@ export default function Header({ itemCount }) {
         </li>
         {/* TODO: Logout */}
         <li>
-          <Link href="/" className="navLink btn btn-ghost gap-2">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="btn btn-ghost gap-2"
+          >
             <FaSignOutAlt />
             Logout
-          </Link>
+          </button>
         </li>
       </>
     );
