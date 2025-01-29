@@ -21,18 +21,28 @@ export default function signin() {
           "Content-Type": "application/json",
         }
       });
+
+       // Log response before parsing
+       const responseText = await response.text();
+       console.log("Raw response:", responseText);
+
       if (response.ok) {
-        const data = await response.json();
+        const data = JSON.parse(responseText);
         console.log("Login successful:", data);
 
-        const userData = {
-          token: data.token,
-          userId: data.userId,
-        }
+        if (!data.token || !data.userData) {
+          console.error("Missing token or userData in response");
+          return;
+      }
+
+        // const userData = {
+        //   token: data.token,
+        //   user: data.userData,
+        // }
 
         // Store token or user data if necessary
-        localStorage.setItem("user", JSON.stringify(userData.userId));
-        localStorage.setItem("token", JSON.stringify(userData.token));
+        localStorage.setItem("user", JSON.stringify(data.userData));
+        localStorage.setItem("token", data.token);
 
         // May redirect to a dashboard
         router.push('/products');
