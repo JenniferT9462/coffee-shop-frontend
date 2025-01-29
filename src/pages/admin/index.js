@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useAuthFetch } from "@/hooks/api";
 import useAuth from "@/hooks/auth";
+import Header from "@/components/Header";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
@@ -48,7 +49,7 @@ export default function AdminProductsPage() {
   function handleCategoryClick(selectedCategory) {
     setSelectedCategory(selectedCategory);
     router.push({
-      pathname: "/products",
+      pathname: "/admin",
       query: {
         category: selectedCategory === "All" ? undefined : selectedCategory,
       },
@@ -102,10 +103,10 @@ export default function AdminProductsPage() {
 
   return (
     <div>
-      <AdminNavBar />
+      <Header />
       <div className="p-4">
-        <h1 className="text-3xl font-semibold text-center mb-8 text-primary">
-          Products Page
+        <h1 className="text-4xl font-semibold text-center my-8 text-primary">
+          Admin Functions
         </h1>
 
         {/* Category Filter Buttons */}

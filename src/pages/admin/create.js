@@ -1,7 +1,8 @@
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
-import AdminNavBar from "@/components/AdminNavBar";
+// import AdminNavBar from "@/components/AdminNavBar";
 import useAuth from "@/hooks/auth";
+import Header from "@/components/Header";
 
 export default function CreateProduct() {
   // Step 4 - get token
@@ -71,7 +72,8 @@ export default function CreateProduct() {
 
   return (
     <>
-      <AdminNavBar />
+      <Header />
+      <h1 className="text-4xl mt-8 text-center text-primary">Create Product</h1>
       {/* Add encType="multipart/form-data" attribute for image file */}
       <form className="card-body" onSubmit={onSubmit} encType="multipart/form-data">
         <div className="form-control">
