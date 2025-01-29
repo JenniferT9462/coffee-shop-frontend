@@ -15,7 +15,7 @@ export default function signup() {
   const [error, setError] = useState('');
   async function handleSignUp(user) {
     alert('You are Signed Up!!' + user.email);
-    user.role = "admin";
+    // user.role = "admin";
     // POST request to register user
     const response = await fetch(registerURL, {
       method: "POST",
