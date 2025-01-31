@@ -3,7 +3,8 @@ import { FaSignInAlt, FaSignOutAlt, FaCoffee, FaTools } from "react-icons/fa";
 import CartButton from "./CartButton";
 import { useRouter } from "next/router";
 // import ThemeController from "./ThemeController";
-import useAuth from "@/hooks/auth";
+// import useAuth from "@/hooks/auth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header({ itemCount }) {
   const { user, setUser, clearAuth } = useAuth();
