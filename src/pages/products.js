@@ -3,8 +3,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
-import { v4 as uuidv4 } from "uuid";
 import { useFetch } from "@/hooks/api";
 import useAuth from "@/hooks/auth";
 
@@ -33,14 +31,59 @@ export default function ProductsPage() {
   const categories = ["All", "Beverages", "Bakery", "Merch"];
 
   useEffect(() => {
-    // Load cart from local storage
-    const cartData = loadCartFromLocalStorage(); // get data from outside the component
-    setCartContents(cartData); // set data inside the component
-    //TODO: get Product Data from server
-    // setProducts(productData.products);
-    // fetchProducts();
-  }, []);
+    if (token) {
+      fetchCart();
+    }
+  }, [token]);
+  
+  async function fetchCart() {
+    try {
+      const response = await fetch(`${BACKEND_URL}/cart`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart");
+      }
+  
+      const cartData = await response.json();
+      console.log("Fetched cart:", cartData);
+      setCartContents(cartData.products || []); // Ensure it's an array
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  }
+  
+  async function addProductToCart(productId, quantity = 1) {
+    try {
+       // Optimistically update the cart state before fetching the updated cart
+    setCartContents((prevCart) => [...prevCart, { productId, quantity }]);
 
+      const response = await fetch(`${BACKEND_URL}/cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId, quantity }),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to add item to cart: ${errorText}`);
+      }
+  
+      console.log("Product added successfully!");
+      await fetchCart(); // ✅ Now fetchCart is defined
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert(`Failed to add product to cart: ${error.message}`);
+    }
+  }
   console.log(products);
 
   // Filter products based on category
@@ -65,37 +108,11 @@ export default function ProductsPage() {
     });
   }
 
-  async function addProductToCart(product) {
-    // const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
-    const newCartContents = [...cartContents, productWithId];
-    try {
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(cartContents._id),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add item to cart");
-      }
-      const updatedCart = await response.json();
-      setCartContents(updatedCart);
-      // saveCartToLocalStorage(newCartContents);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to add product to cart");
-    }
-    
-  }
-
   const allProducts = products.map((product, idx) => {
     function addToCart() {
-      alert(product.name + " Has Been Added to Your Cart!!!");
+      alert(`${product.name} Has Been Added to Your Cart!!!`);
       // TODO: Add fetch to backend
-      addProductToCart(product);
+      addProductToCart(product._id);
     }
     // Redirect to product/[id].js with template literal to pass a js variable
     function viewProduct() {
