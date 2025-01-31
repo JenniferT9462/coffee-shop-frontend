@@ -5,10 +5,10 @@ import { createContext, useContext } from "react";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const { token, user, isAuthenticated } = useAuthHook();
+    const { token, user, isAuthenticated, clearAuth } = useAuthHook();
     
     return (
-        <AuthContext.Provider value={{ token, user, isAuthenticated  }}>
+        <AuthContext.Provider value={{ token, user, isAuthenticated, clearAuth  }}>
             {children}
         </AuthContext.Provider>
     );

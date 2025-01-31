@@ -65,11 +65,30 @@ export default function ProductsPage() {
     });
   }
 
-  function addProductToCart(product) {
-    const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
+  async function addProductToCart(product) {
+    // const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
     const newCartContents = [...cartContents, productWithId];
-    setCartContents(newCartContents);
-    saveCartToLocalStorage(newCartContents);
+    try {
+      const response = await fetch(`${BACKEND_URL}/cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(cartContents._id),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+      }
+      const updatedCart = await response.json();
+      setCartContents(updatedCart);
+      // saveCartToLocalStorage(newCartContents);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to add product to cart");
+    }
+    
   }
 
   const allProducts = products.map((product, idx) => {
