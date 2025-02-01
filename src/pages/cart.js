@@ -1,12 +1,10 @@
 import Button from "@/components/Button";
-// import data from "../../mocks/cart.json";
 import CartItem from "@/components/CartItem";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-// import { loadCartFromLocalStorage, saveCartToLocalStorage } from "@/util";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 

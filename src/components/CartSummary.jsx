@@ -31,7 +31,7 @@ export default function CartSummary({ cartContent, updateCart }) {
   const calculateTotalPrice = () =>
     cartContent.reduce(
       (total, product) =>
-        total + Number(product.price) * Number(product.quantity || 1),
+        total + Number(product.productId.price) * Number(product.quantity || 1),
       0
     );
 
