@@ -1,27 +1,58 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CheckoutForm from "@/components/CheckoutForm";
-// import cart from "../../mocks/cart.json";
 import { useState, useEffect } from "react";
-import {
-  loadCartFromLocalStorage,
-  saveCartToLocalStorage,
-  saveOrderToLocalStorage,
-} from "@/util";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
+import { saveOrderToLocalStorage } from "@/util";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
+
 
 export default function CheckoutPage() {
   const [cartContent, setCartContents] = useState([]);
   const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  useEffect(() => {
-    const cartData = loadCartFromLocalStorage();
-    console.log("Loaded cart data:", cartData); // Debug log
-    if (cartData) setCartContents(cartData);
-  }, []);
+  const { token } = useAuth();
+
+  console.log(token);
+
+ useEffect(() => {
+    if (token) {
+      fetchCart();
+    }
+  }, [token]);
+
+  async function fetchCart() {
+    try {
+      const response = await fetch(`${BACKEND_URL}/cart`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart");
+      }
+
+      const cartData = await response.json();
+      console.log("Fetched cart:", cartData);
+      cartData.products.forEach((item) => console.log(item));
+      setCartContents(cartData.products || []); // Ensure it's an array
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const updateCart = (newCart) => {
     setCartContents(newCart);
-    saveCartToLocalStorage(newCart);
+    // saveCartToLocalStorage(newCart);
   };
 
   function handleCheckout(
@@ -104,7 +135,7 @@ export default function CheckoutPage() {
 
         {/* Checkout Form Section */}
         <CheckoutForm
-          cartContent={cartContent}
+          // cartContent={cartContent}
           updateCart={updateCart}
           handleCheckout={handleCheckout}
         />

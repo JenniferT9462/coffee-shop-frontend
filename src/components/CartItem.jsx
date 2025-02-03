@@ -3,27 +3,38 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 
 export default function CartItem({ product, updateQuantity, removeItem }) {
+   // Ensure price and quantity are valid numbers for calculations
+   const price = parseFloat(product.productId.price);
+   const quantity = product.quantity;
+
   const handleIncrease = () => {
-    updateQuantity(product._id, 1);
+    console.log("Increasing quantity for:", product.productId._id);
+    updateQuantity(product.productId._id, 1);
   };
 
   const handleDecrease = () => {
-    updateQuantity(product._id, -1);
+    console.log("Decreasing quantity for:", product.productId._id);
+    updateQuantity(product.productId._id, -1);
   };
+
+  // Calculate the subtotal for this item (price * quantity)
+  const subtotal = (price * quantity).toFixed(2); // Format to 2 decimal places
+
+
   return (
     <div className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg">
       <img
-        src={product.imageUrl}
-        alt={product.name}
+        src={product.productId.imageUrl}
+        alt={product.productId.name}
         className="w-16 h-16 object-cover mr-4"
       />
       <div className="flex-grow">
-        <h3 className="text-lg font-medium">{product.name}</h3>
+        <h3 className="text-lg font-medium">{product.productId.name}</h3>
         <p className="text-sm text-gray-500">
-          Price: ${product.price.toFixed(2)}
+          Price: ${price.toFixed(2)}
         </p>
         <p className="text-sm text-gray-500">
-          Subtotal: ${(product.price * product.quantity).toFixed(2)}
+          Subtotal: ${subtotal}
         </p>
       </div>
       {/* Quantity buttons */}
@@ -33,11 +44,11 @@ export default function CartItem({ product, updateQuantity, removeItem }) {
           // TODO: Add function to calculate quantity change
           onClick={handleDecrease} // Placeholder for decrease functionality
           className="btn btn-sm btn-secondary"
-          disabled={product.quantity <= 1}
+          disabled={quantity <= 1}
         >
           -
         </button>
-        <span>{product.quantity}</span>
+        <span>{quantity}</span>
         <button
           // TODO: Add function to calculate quantity change
           onClick={handleIncrease} // Placeholder for increase functionality
@@ -51,7 +62,7 @@ export default function CartItem({ product, updateQuantity, removeItem }) {
           // TODO Add function to remove items
           variant="error"
           label="Remove"
-          handleClick={removeItem}
+          handleClick={() => removeItem(product._id)} // Pass product id to remove item
         />
       </div>
     </div>

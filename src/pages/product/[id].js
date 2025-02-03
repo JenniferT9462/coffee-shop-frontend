@@ -1,7 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
-// import products from "../../../mocks/products.json";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import { useEffect, useState } from "react";

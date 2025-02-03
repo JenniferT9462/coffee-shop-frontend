@@ -1,19 +1,20 @@
-import ProductCard from "@/components/ProductCard";
-import Header from "@/components/Header";
+import AdminProductCard from "@/components/AdminProductCard";
+import AdminNavBar from "@/components/AdminNavBar";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useFetch } from "@/hooks/api";
-// import useAuth from "@/hooks/auth";
-import { useAuth } from "@/context/AuthContext";
+import { v4 as uuidv4 } from "uuid";
+import { useAuthFetch } from "@/hooks/api";
+import useAuth from "@/hooks/auth";
+import Header from "@/components/Header";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
-export default function ProductsPage() {
+export default function AdminProductsPage() {
   const router = useRouter();
   const { category } = router.query;
 
-  const [cartContents, setCartContents] = useState([]);
+  //   const [cartContents, setCartContents] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   console.log(category);
@@ -22,7 +23,7 @@ export default function ProductsPage() {
   console.log(token);
 
   const [url, setUrl] = useState(`${BACKEND_URL}/products`);
-  const [productFetchError, productsLoading, products] = useFetch(
+  const [productFetchError, productsLoading, products] = useAuthFetch(
     url,
     [],
     token
@@ -31,60 +32,6 @@ export default function ProductsPage() {
   // Define categories
   const categories = ["All", "Beverages", "Bakery", "Merch"];
 
-  useEffect(() => {
-    if (token) {
-      fetchCart();
-    }
-  }, [token]);
-  
-  async function fetchCart() {
-    try {
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error("Failed to fetch cart");
-      }
-  
-      const cartData = await response.json();
-      console.log("Fetched cart:", cartData);
-      setCartContents(cartData.products || []); // Ensure it's an array
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-    }
-  }
-  
-  async function addProductToCart(productId, quantity = 1) {
-    try {
-       // Optimistically update the cart state before fetching the updated cart
-    setCartContents((prevCart) => [...prevCart, { productId, quantity }]);
-
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ productId, quantity }),
-      });
-  
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to add item to cart: ${errorText}`);
-      }
-  
-      console.log("Product added successfully!");
-      await fetchCart(); // ✅ Now fetchCart is defined
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      alert(`Failed to add product to cart: ${error.message}`);
-    }
-  }
   console.log(products);
 
   // Filter products based on category
@@ -102,39 +49,64 @@ export default function ProductsPage() {
   function handleCategoryClick(selectedCategory) {
     setSelectedCategory(selectedCategory);
     router.push({
-      pathname: "/products",
+      pathname: "/admin",
       query: {
         category: selectedCategory === "All" ? undefined : selectedCategory,
       },
     });
   }
 
+  async function handleDeleteProduct(product) {
+    // const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
+    console.log("Delete: ", product);
+    const productId = product._id;
+    try {
+      const response = await fetch(`${BACKEND_URL}/products/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            "Authorization": `Bearer ${token.replace(/['"]+/g, "")}`
+        }
+      })  
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+//   function handleEditProduct(product) {
+//     const productWithId = { ...product, quantity: 1, cartItemId: uuidv4() };
+//     alert("Edit: " + productWithId.name);
+//   }
+
   const allProducts = products.map((product, idx) => {
-    function addToCart() {
-      alert(`${product.name} Has Been Added to Your Cart!!!`);
+    function deleteProduct() {
+      alert(product.name + " Has Been deleted!!!");
       // TODO: Add fetch to backend
-      addProductToCart(product._id);
+      handleDeleteProduct(product);
     }
     // Redirect to product/[id].js with template literal to pass a js variable
-    function viewProduct() {
-      router.push(`/product/${product._id}`);
+    function editProduct() {
+        alert("Proceeding to Edit")
+        console.log("Edit Product")
+        router.push(`/admin/${product._id}`);
     }
     return (
-      <ProductCard
+      <AdminProductCard
         key={product._id + idx}
         product={product}
-        onAddToCart={addToCart}
-        onViewProduct={viewProduct}
+        onDeleteProduct={deleteProduct}
+        onEditProduct={editProduct}
       />
     );
   });
 
   return (
     <div>
-      <Header itemCount={cartContents.length} />
+      <Header />
       <div className="p-4">
-        <h1 className="text-3xl font-semibold text-center mb-8 text-primary">
-          Products Page
+        <h1 className="text-4xl font-semibold text-center my-8 text-primary">
+          Admin Functions
         </h1>
 
         {/* Category Filter Buttons */}

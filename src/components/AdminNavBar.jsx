@@ -1,119 +1,10 @@
 import Link from "next/link";
-import { FaSignInAlt, FaSignOutAlt, FaCoffee, FaTools } from "react-icons/fa";
-import CartButton from "./CartButton";
+import { FaSignInAlt, FaCoffee } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { useCart } from "@/context/CartContext";
 
-export default function Header({ itemCount }) {
-  const { user, clearAuth } = useAuth();
-  const { cart } = useCart();
-  // const [mounted, setMounted] = useState(false);
-
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
-
-  // if (!mounted) return <div>Loading...</div>;
-
-  console.log("Header user:", user);
-
-
+export default function AdminNavBar() {
   const router = useRouter();
-
-  const handleLogout = () => {
-    console.log("Logout button clicked!"); // Debugging log
-
-    clearAuth(); // Clear auth state and localStorage
-    router.push("/signin"); // Ensure navigation updates properly
-  };
-
-  let menuItemsJSX;
-
-  if (user?.role === "user") {
-    menuItemsJSX = (
-      <>
-        <li>
-          <Link href="/products" className="navLink btn btn-ghost gap-2">
-            <FaCoffee />
-            Products
-          </Link>
-        </li>
-        <li>
-          <Link href="/cart" className="navLink btn btn-ghost gap-2">
-            <CartButton itemCount={cart.length} />
-          </Link>
-        </li>
-        {/* TODO: Logout */}
-        <li>
-        <button
-            type="button"
-            onClick={handleLogout}
-            className="btn btn-ghost gap-2"
-          >
-            <FaSignOutAlt />
-            Logout
-          </button>
-        </li>
-      </>
-    );
-  } else if (user?.role === "admin") {
-    menuItemsJSX = (
-      <>
-        <li>
-          <Link href="/admin/create" className="navLink btn btn-ghost gap-2">
-            <FaCoffee />
-            Create Product
-          </Link>
-        </li>
-        <li>
-          <Link href="/admin" className="navLink btn btn-ghost gap-2">
-            <FaTools />
-            Admin Functions
-          </Link>
-        </li>
-        {/* TODO: Logout */}
-        <li>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="btn btn-ghost gap-2"
-          >
-            <FaSignOutAlt />
-            Logout
-          </button>
-        </li>
-      </>
-    );
-  } else {
-    menuItemsJSX = (
-      <>
-        <li>
-          <Link href="/products" className="navLink btn btn-ghost gap-2">
-            <FaCoffee />
-            Products
-          </Link>
-        </li>
-        <li>
-          <Link href="/signin" className="navLink btn btn-ghost gap-2">
-            <FaSignInAlt />
-            Sign In
-          </Link>
-        </li>
-      </>
-    );
-  }
-
-  // const router = useRouter();
-  // // Make CartButton disappear on Home, signup and signin
-  // const isHomePage = router.pathname === "/";
-  // const isSignUpPage = router.pathname === "/signup";
-  // const isSignInPage = router.pathname === "/signin";
-
-  // Stub function for signin
-  const goToLogin = () => console.log("Navigate to Login Page");
-
+  
   return (
     <div className="navbar bg-primary text-primary-content">
       {/* Logo */}
@@ -130,7 +21,7 @@ export default function Header({ itemCount }) {
           ></path>
         </svg>
         <Link href="/" className="btn btn-ghost text-xl">
-          Brew Haven
+          Brew Haven - Admin
         </Link>
       </div>
 
@@ -138,11 +29,19 @@ export default function Header({ itemCount }) {
 
       {/* Navigation Links */}
       <div className="flex-1 justify-end space-x-4">
-        <ul className="menu menu-horizontal px-1">{menuItemsJSX}</ul>
-        {/* Make cart not display on homepage */}
-        {/* {!isHomePage && !isSignUpPage && !isSignInPage && (
+        <Link href="/admin/create" className="navLink btn btn-ghost gap-2">
+          <FaCoffee />
+          Create Product
+        </Link>
+        <Link href="/admin" className="navLink btn btn-ghost gap-2">
+          <FaCoffee />
+          Admin Functions
+        </Link>
+        <Link href="/signin" className="navLink btn btn-ghost gap-2">
+          <FaSignInAlt />
+          Sign In
+        </Link>
         
-        )} */}
       </div>
     </div>
   );
