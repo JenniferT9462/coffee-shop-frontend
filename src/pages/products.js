@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useFetch } from "@/hooks/api";
-import useAuth from "@/hooks/auth";
+// import useAuth from "@/hooks/auth";
+import { useAuth } from "@/context/AuthContext";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 

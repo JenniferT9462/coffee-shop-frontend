@@ -2,12 +2,23 @@ import Link from "next/link";
 import { FaSignInAlt, FaSignOutAlt, FaCoffee, FaTools } from "react-icons/fa";
 import CartButton from "./CartButton";
 import { useRouter } from "next/router";
-// import ThemeController from "./ThemeController";
-// import useAuth from "@/hooks/auth";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 export default function Header({ itemCount }) {
-  const { user, setUser, clearAuth } = useAuth();
+  const { user, clearAuth } = useAuth();
+  const { cart } = useCart();
+  // const [mounted, setMounted] = useState(false);
+
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+
+  // if (!mounted) return <div>Loading...</div>;
+
+  console.log("Header user:", user);
+
 
   const router = useRouter();
 
@@ -20,7 +31,7 @@ export default function Header({ itemCount }) {
 
   let menuItemsJSX;
 
-  if (user && user.role === "user") {
+  if (user?.role === "user") {
     menuItemsJSX = (
       <>
         <li>
@@ -31,7 +42,7 @@ export default function Header({ itemCount }) {
         </li>
         <li>
           <Link href="/cart" className="navLink btn btn-ghost gap-2">
-            <CartButton itemCount={itemCount} />
+            <CartButton itemCount={cart.length} />
           </Link>
         </li>
         {/* TODO: Logout */}
@@ -47,7 +58,7 @@ export default function Header({ itemCount }) {
         </li>
       </>
     );
-  } else if (user && user.role === "admin") {
+  } else if (user?.role === "admin") {
     menuItemsJSX = (
       <>
         <li>
