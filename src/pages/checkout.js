@@ -4,9 +4,8 @@ import CheckoutForm from "@/components/CheckoutForm";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-import {
-  saveOrderToLocalStorage,
-} from "@/util";
+import { saveOrderToLocalStorage } from "@/util";
+
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
 
@@ -136,7 +135,7 @@ export default function CheckoutPage() {
 
         {/* Checkout Form Section */}
         <CheckoutForm
-          cartContent={cartContent}
+          // cartContent={cartContent}
           updateCart={updateCart}
           handleCheckout={handleCheckout}
         />

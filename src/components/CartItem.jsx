@@ -8,10 +8,12 @@ export default function CartItem({ product, updateQuantity, removeItem }) {
    const quantity = product.quantity;
 
   const handleIncrease = () => {
+    console.log("Increasing quantity for:", product.productId._id);
     updateQuantity(product.productId._id, 1);
   };
 
   const handleDecrease = () => {
+    console.log("Decreasing quantity for:", product.productId._id);
     updateQuantity(product.productId._id, -1);
   };
 
