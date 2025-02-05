@@ -20,6 +20,10 @@ export default function CartPage() {
   useEffect(() => {
     if (token) {
       fetchCart();
+    } else {
+      const storedCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+      setCartContents(storedCart);
+      setLoading(false);
     }
   }, [token]);
 
@@ -39,8 +43,21 @@ export default function CartPage() {
 
       const cartData = await response.json();
       console.log("Fetched cart:", cartData);
-      cartData.products.forEach((item) => console.log(item));
-      setCartContents(cartData.products || []); // Ensure it's an array
+
+      // Normalize backend cart structure
+      const formattedCart = cartData.products.map((item) => ({
+        _id: item.productId._id,
+        name: item.productId.name,
+        description: item.productId.description,
+        imageUrl: item.productId.imageUrl,
+        price: item.productId.price,
+        quantity: item.quantity,
+        cartItemId: item._id, // Needed for removing items
+      }));
+
+      // cartData.products.forEach((item) => console.log(item));
+      // setCartContents(cartData.products || []);
+      setCartContents(formattedCart);
     } catch (error) {
       console.error("Error fetching cart:", error);
     } finally {
@@ -56,13 +73,7 @@ export default function CartPage() {
 
   const removeItem = async (productId) => {
     try {
-      console.log("Removing productId:", productId); // Log the productId to be removed
-
-      // Fetch the item from the cartContent state that matches the productId
-      const item = cartContent.find((cartItem) => cartItem.productId._id === productId);
-      if (item) {
-        console.log("Item productId:", item.productId._id); // Log the item productId to confirm it's correct
-
+      if (token) {
         const response = await fetch(`${BACKEND_URL}/cart/${productId}`, {
           method: "DELETE",
           headers: {
@@ -71,20 +82,18 @@ export default function CartPage() {
           },
         });
 
-        const data = await response.json();
+        if (!response.ok) throw new Error("Failed to remove item");
 
-        if (response.ok) {
-          alert("Item has been removed from the cart!");
-          setCartContents((prevContents) =>
-            prevContents.filter((cartItem) => cartItem.productId._id !== productId)
-          );
-        } else {
-          console.error("Failed to remove item:", data.message);
-          alert("Failed to remove item.");
-        }
+        setCartContents((prev) =>
+          prev.filter((item) => item._id !== productId)
+        );
       } else {
-        console.error("Item not found in cart.");
-        alert("Item not found in cart.");
+        // Guest user - Remove from local storage
+        const updatedCart = cartContent.filter(
+          (item) => item._id !== productId
+        );
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        setCartContents(updatedCart);
       }
     } catch (error) {
       console.error("Error removing item:", error);
@@ -93,65 +102,61 @@ export default function CartPage() {
   };
 
   const updateQuantity = async (id, delta) => {
-    console.log("Updating quantity for item with productId:", id); // Log the productId you're passing
-    console.log("Current cartContent:", cartContent); // Log the cart content to verify its structure
+    if (token) {
+      // Find the cart item based on the productId
+      const updatedItem = cartContent.find((item) => item._id === id);
 
-    // Find the cart item based on the productId
-    const updatedItem = cartContent.find((item) => item.productId._id === id);
+      if (!updatedItem) return;
 
-    if (!updatedItem) {
-      console.error("Item not found in cart");
-      alert("Item not found in cart.");
-      return;
-    }
+      // Prevent quantity from going below 1
+      const newQuantity = Math.max(updatedItem.quantity + delta, 1);
 
-    const newQuantity = Math.max(updatedItem.quantity + delta, 1); // Prevent quantity from going below 1
-
-    try {
-      const response = await fetch(
-        `${BACKEND_URL}/cart/${updatedItem.productId._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ quantity: newQuantity }),
-        }
-      );
+      try {
+        const response = await fetch(
+          `${BACKEND_URL}/cart/${updatedItem.productId._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ quantity: newQuantity }),
+          });
 
       // Check if the response is not ok
-      if (!response.ok) {
-        const errorData = await response.json(); // Try to get the error message from the response
-        console.error("Failed to update quantity. Response:", errorData);
-        throw new Error(
-          `Failed to update quantity. Server responded with: ${errorData.message}`
-        );
-      }
+      if (!response.ok) throw new Error("Failed to update quantity");
 
-      // Update the local cartContent state to reflect the new quantity
-      setCartContents((prevCart) =>
-        prevCart.map((item) =>
-          item.productId._id === id ? { ...item, quantity: newQuantity } : item
+        // Update the local cartContent state to reflect the new quantity
+      setCartContents((prev) =>
+        prev.map((item) =>
+          item._id === id ? { ...item, quantity: newQuantity } : item
         )
       );
     } catch (error) {
-      console.error("Error updating quantity:", error); // Log the error message for debugging
-      alert(`Failed to update quantity: ${error.message}`);
+        console.error("Error updating quantity:", error); // Log the error message for debugging
+        alert(`Failed to update quantity: ${error.message}`);
     }
-  };
+  } else {
+    // Update in local storage
+    const updatedCart = cartContent.map((item) =>
+      item._id === id ? { ...item, quantity: Math.max(item.quantity + delta, 1) } : item
+    );
+    localStorage.setItem("guestCart", JSON.stringify(updatedCart));
+    setCartContents(updatedCart);
+  }
+};
 
   const calculateSubTotal = (item) => {
-    return item.quantity * item.productId.price;
+    return item.quantity * item.price;
   };
 
   const calculateTotalPrice = () =>
     cartContent.reduce((total, product) => {
-      if (!product.productId || typeof product.productId.price !== "number") {
+      if (!product._id || typeof product.price !== "number") {
         console.error("Skipping product with missing price:", product);
         return total;
       }
-      return total + Number(product.productId.price) * Number(product.quantity);
+      return total + Number(product.price) * Number(product.quantity);
     }, 0);
 
   console.log(cartContent);
@@ -163,11 +168,11 @@ export default function CartPage() {
         className="flex justify-between items-center mb-4 border-b pb-2"
       >
         <div className="flex flex-col">
-          <span className="font-bold">{item.productId.name}</span>
+          <span className="font-bold">{item.name}</span>
           <div className="text-sm text-gray-500">
             {/* TODO: figure out how to implement this with real calculations */}
             <span>{item.quantity} x </span>
-            <span>${item.productId.price.toFixed(2)}</span>
+            <span>${item.price.toFixed(2)}</span>
           </div>
         </div>
 
@@ -181,10 +186,9 @@ export default function CartPage() {
   const cartJSX = cartContent.map((item) => (
     <CartItem
       key={item._id}
-      product={item} // Access the product details inside productId
-      // quantity={item.quantity} // Pass the quantity directly
+      product={item} 
       updateQuantity={updateQuantity}
-      removeItem={() => removeItem(item.productId._id)} // Pass the item ID for removal
+      removeItem={() => removeItem(item._id)} // Pass the item ID for removal
     />
   ));
 
