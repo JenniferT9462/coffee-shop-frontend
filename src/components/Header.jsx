@@ -9,13 +9,7 @@ import { useCart } from "@/context/CartContext";
 export default function Header({ itemCount }) {
   const { user, clearAuth } = useAuth();
   const { cart } = useCart();
-  // const [mounted, setMounted] = useState(false);
-
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
-
-  // if (!mounted) return <div>Loading...</div>;
+  
 
   console.log("Header user:", user);
 
@@ -41,12 +35,6 @@ export default function Header({ itemCount }) {
           </Link>
         </li>
         <li>
-          <Link href="/cart" className="navLink btn btn-ghost gap-2">
-            <CartButton itemCount={cart.length} />
-          </Link>
-        </li>
-        {/* TODO: Logout */}
-        <li>
         <button
             type="button"
             onClick={handleLogout}
@@ -55,6 +43,11 @@ export default function Header({ itemCount }) {
             <FaSignOutAlt />
             Logout
           </button>
+        </li>
+        <li>
+          <Link href="/cart" className="navLink btn btn-ghost gap-2">
+            <CartButton itemCount={itemCount} />
+          </Link>
         </li>
       </>
     );
@@ -99,6 +92,11 @@ export default function Header({ itemCount }) {
           <Link href="/signin" className="navLink btn btn-ghost gap-2">
             <FaSignInAlt />
             Sign In
+          </Link>
+        </li>
+        <li>
+          <Link href="/cart" className="navLink btn btn-ghost gap-2">
+            <CartButton itemCount={itemCount} />
           </Link>
         </li>
       </>
