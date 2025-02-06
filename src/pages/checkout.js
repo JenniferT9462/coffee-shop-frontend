@@ -2,8 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CheckoutForm from "@/components/CheckoutForm";
 import { useState, useEffect } from "react";
-// import { useRouter } from "next/router";
-// import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { saveOrderToLocalStorage } from "@/util";
 

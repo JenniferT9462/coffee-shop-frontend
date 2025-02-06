@@ -23,7 +23,17 @@ export function CartProvider({ children }) {
           },
         });
 
-        if (!response.ok) throw new Error("Failed to fetch cart");
+        // if (!response.ok) throw new Error("Failed to fetch cart");
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            // Handle empty cart scenario
+            setCart([]);
+            return;
+          }
+          throw new Error("Failed to fetch cart");
+        }
+  
 
         const cartData = await response.json();
 
