@@ -15,17 +15,6 @@ export default function CreateProduct() {
     alert("Form Submitted");
 
     // Step 3 - get all the inputs, and alert them (or log them)
-    // const product = {
-    //   name: e.target.elements.name.value,
-    //   description: e.target.elements.description.value,
-    //   category: e.target.elements.category.value,
-    //   price: e.target.elements.price.value,
-    //   stock: e.target.elements.stock.value,
-    // };
-
-    // // Log the product details
-    // console.log("Payload being sent:", JSON.stringify(product));
-
     // Create a FormData object
     const formData = new FormData();
     formData.append("name", e.target.elements.name.value);

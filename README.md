@@ -1,78 +1,91 @@
 # coffee-shop-frontend
 
-This is a project to build a frontend for a coffee shop. The project will include a variety of components and features to create a user-friendly experience for customers.
+## Motivation
+
+This project aims to create a seamless and user-friendly online shopping experience for a coffee shop. The goal is to provide customers with an intuitive interface to browse products, add items to their cart, and complete their purchases efficiently. The application emphasizes responsive design, component reusability, and an optimized user experience.
 
 [Live link](https://coffee-shop-frontend-eight.vercel.app/)
 
 ## Development Plan
-### Day 1: Project Setup
+- Day 1: Project Setup
 [Day 1](day-1.md)
-### Day 2: Component and Form Development
+- Day 2: Component and Form Development
 [Day 2](day-2.md)
-### Day 3: API Integration and Prop Management
+- Day 3: API Integration and Prop Management
 [Day 3](day-3.md)
-### Day 4: Authentication and API v2
+- Day 4: Authentication and API v2
 [Day 4](day-4.md)
-### Day 5: Shopping Cart Feature
+- Day 5: Shopping Cart Feature
 [Day 5](day-5.md)
 
-### Key Tools & Technologies
-- Frontend: Next.js, DaisyUI, Storybook, React Hooks (useState, useQuery)
-- Backend: Node.js, API v1 (non-auth) and API v2 (auth)
-- Database: (Database type to be decided: e.g., MongoDB, PostgreSQL)
-- Version Control: Git/GitHub
+## Key Tools & Technologies
+- Frontend: Next.js, React, Tailwind CSS, DaisyUI, Storybook
+- Backend: Node.js, Express.js
+- Database: MongoDB (via Mongoose)
+- Authentication: JSON Web Tokens (JWT)
+- Hosting & Deployment: Vercel (Frontend), Render (Backend)
+- Version Control: Git & GitHub
 
-### Expected Outcome
-By the end of Day 5, the project will be a fully functional e-commerce application with:
+## Technical Overview
+The application consists of a fully functional frontend for an e-commerce coffee shop. The technical stack includes:
 
-- Modular and reusable components.
-- Secure and efficient API endpoints.
-- A user-friendly shopping cart.
-- A robust authentication system.
+### Frontend Features
 
-## Technologies
+- Reusable Components: Navbar, Footer, Buttons, Loaders, Product Cards, Cart Items, and more.
+- State Management: React Hooks (useState, useQuery).
+- Component Development: Storybook is used to test and visualize UI components in isolation.
+- Styling: Tailwind CSS and DaisyUI for a modern and clean design.
 
-- React
-- Next.js
-- Tailwind CSS
-- Storybook
-- DaisyUI
-- Vercel
-- ...
+### Backend & API
 
-## Components
+- User Authentication: Secure login and signup using JWT authentication.
+- Product Management: Dynamic product listing and product details page.
+- Shopping Cart: Users can add/remove items from their cart, view order summary, and proceed to checkout.
+- Checkout & Orders: A structured checkout flow with steps to review and finalize purchases.
 
-- [x] Navbar
-- [x] Footer
-- [x] Button
-- [x] Loader
-- [x] Toast
-- [x] ProductCard
-- [x] CartItem
-- [x] CartSummary
+## Wishlist & Future Plans
 
-## Features
-- [x] Tailwind CSS with DaisyUI integration.
-- [x] Storybook for component development.
-- [x] Component stubs for all components.
+- Dark Mode Toggle: Implement a dark/light mode feature.
+- Enhanced Animations: Improve UX with animations (e.g., a cart item animation like the McDonald’s app).
+- Payment Integration: Add Stripe or PayPal for real transactions.
+- Order History: Allow users to view past orders.
+- Admin Dashboard: Manage products, orders, and customers.
+- Mobile App: Extend the project into a mobile application.
 
-## Setup
-If you would like to try this project out or contribute, follow these steps:
+## Setup & Installation
+If you would like to run this project locally, follow these steps:
 
-1. Clone the repository.
-2. Run `npm install` to install dependencies.
-3. Start the app with `npm run dev`.
-4. Open Storybook with `npm run storybook`.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/JenniferT9462/coffee-shop-frontend.git
+
+2. Navigate to the project directory:
+    ```bash
+    cd coffee-shop-frontend
+
+3. Install dependencies:
+    ```bash
+    npm install
+
+4. Start the development server:
+    ```bash
+    npm run dev
+
+5. (Optional) Start Storybook:
+    ```bash
+    npm run storybook
+
+6. Open the application in your browser at http://localhost:3000
 
 ## Contributing
-If you would like to contribute to this project, please follow these steps:
+Interested in contributing? Follow these steps:
 
-1. Fork the repository.
+1. Fork the repository on GitHub.
 2. Create a new branch for your feature.
-3. Make your changes.
-4. Test your changes.
-5. Push your changes to your fork.
-6. Create a pull request.
+3. Make your changes and ensure they align with the project’s coding standards.
+4. Test your changes locally.
+5. Push your changes to your forked repository.
+6. Submit a pull request (PR) for review.
 
 ## Design Process
 - NavBar & Footer:
@@ -89,10 +102,6 @@ If you would like to contribute to this project, please follow these steps:
 - Cart & Checkout pages:
     * Similar to the ProductCards and Forms I used in my other pages.
     * For Checkout Page: I used DaisyUI `divider` and `steps`.  
-### Design Goals
-- I want to choose a different font for my project. I like `Oh No!` font. 
-- I may tweak my color scheme, specifically the overall text color. And add a `dark` and `light` mode with a toggle button. 
-- I still need to build a `NavBar` and what links I need to include with navigation. Also, decide how I want to display a `cart icon` with counter. I may also add some effects or animation when adding items to cart or motion effect on page loads. The animation I am thinking is similar to the McDonald's App when adding items to cart, it does a effect to the cart icon. It kinda looks like it's diving into the cart icon(may be a stretch, but we will see).
 
 ## Screenshots
 
@@ -114,8 +123,6 @@ If you would like to contribute to this project, please follow these steps:
 ![checkout page](</public/checkoutPage.png>)
 
 ## Attribution
-
-Give credit to any resources or inspiration you used in this project.
 
 - [Tailwind CSS](https://tailwindcss.com/)
 - [DaisyUI](https://daisyui.com/)

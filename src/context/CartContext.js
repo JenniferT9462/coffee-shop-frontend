@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
-// import { useAuth } from "./AuthContext";
+import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
 
-export function CartProvider({ children, token }) {
+export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
-//   const { token } = useAuth();
+  const { token } = useAuth();
   const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
   useEffect(() => {
@@ -13,108 +13,142 @@ export function CartProvider({ children, token }) {
   }, [token]);
 
   async function fetchCart() {
-    try {
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    if (token) {
+      try {
+        const response = await fetch(`${BACKEND_URL}/cart`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      if (!response.ok) throw new Error("Failed to fetch cart");
+        // if (!response.ok) throw new Error("Failed to fetch cart");
 
-      const cartData = await response.json();
-      
-    //   setCart(cartData.products || []);
-     // Ensure quantity is a number for all products
-     const updatedCart = cartData.products.map((item) => ({
-        ...item,
-        quantity: Number(item.quantity) || 1,  // Default to 1 if quantity is not a valid number
-      }));
+        if (!response.ok) {
+          if (response.status === 404) {
+            // Handle empty cart scenario
+            setCart([]);
+            return;
+          }
+          throw new Error("Failed to fetch cart");
+        }
   
-      setCart(updatedCart);
-    } catch (error) {
-      console.error("Error fetching cart:", error);
+
+        const cartData = await response.json();
+
+        setCart(
+          cartData.products.map((item) => ({
+            _id: item.productId._id,
+            name: item.productId.name,
+            imageUrl: item.productId.imageUrl,
+            price: item.productId.price,
+            quantity: Number(item.quantity) || 1,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    } else {
+      // Load guest cart from localStorage
+      const guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+      setCart(guestCart);
     }
   }
 
   async function removeItem(productId) {
-    try {
-      const response = await fetch(`${BACKEND_URL}/cart/${productId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    if (token) {
+      try {
+        const response = await fetch(`${BACKEND_URL}/cart/${productId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      if (response.ok) {
+        if (!response.ok) throw new Error("Failed to remove item");
+
         setCart((prevCart) =>
-          prevCart.filter((item) => item.productId._id !== productId)
+          prevCart.filter((item) => item._id !== productId)
         );
-      } else {
-        console.error("Failed to remove item");
+      } catch (error) {
+        console.error("Error removing item:", error);
       }
-    } catch (error) {
-      console.error("Error removing item:", error);
+    } else {
+      // Remove from guest cart
+      const updatedCart = cart.filter((item) => item._id !== productId);
+      localStorage.setItem("guestCart", JSON.stringify(updatedCart));
+      setCart(updatedCart);
     }
   }
 
   const updateQuantity = async (id, delta) => {
-      console.log("Updating quantity for item with productId:", id); // Log the productId you're passing
-      console.log("Current cartContent:", cart); // Log the cart content to verify its structure
-  
-      // Find the cart item based on the productId
-      const updatedItem = cart.find((item) => item.productId._id === id);
-  
-      if (!updatedItem) {
-        console.error("Item not found in cart");
-        alert("Item not found in cart.");
-        return;
-      }
-
-      const currentQuantity = Number(updatedItem.quantity) || 1;
-      const newQuantity = Math.max(currentQuantity + delta, 1); // Prevent quantity from going below 1
-      console.log("Current quantity:", currentQuantity, "New quantity:", newQuantity);
-  
+    if (token) {
       try {
-        const response = await fetch(
-          `${BACKEND_URL}/cart/${updatedItem.productId._id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ quantity: newQuantity }),
-          }
-        );
-  
-        // Check if the response is not ok
-        if (!response.ok) {
-          const errorData = await response.json(); // Try to get the error message from the response
-          console.error("Failed to update quantity. Response:", errorData);
-          throw new Error(
-            `Failed to update quantity. Server responded with: ${errorData.message}`
-          );
-        }
-  
-        // Update the local cartContent state to reflect the new quantity
+        const response = await fetch(`${BACKEND_URL}/cart/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ quantity: delta }),
+        });
+
+        if (!response.ok) throw new Error("Failed to update quantity");
+
         setCart((prevCart) =>
           prevCart.map((item) =>
-            item.productId._id === id ? { ...item, quantity: newQuantity } : item
+            item._id === id
+              ? { ...item, quantity: Math.max(item.quantity + delta, 1) }
+              : item
           )
         );
       } catch (error) {
-        console.error("Error updating quantity:", error); // Log the error message for debugging
-        alert(`Failed to update quantity: ${error.message}`);
+        console.error("Error updating quantity:", error);
       }
-    };
-  
+    } else {
+      // Guest user quantity update
+      const updatedCart = cart.map((item) =>
+        item._id === id
+          ? { ...item, quantity: Math.max(item.quantity + delta, 1) }
+          : item
+      );
+      localStorage.setItem("guestCart", JSON.stringify(updatedCart));
+      setCart(updatedCart);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      if (token) {
+        // Authenticated user: Clear cart from backend
+        const response = await fetch(`${BACKEND_URL}/cart`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to clear cart from backend");
+        }
+      } else {
+        // Guest user: Clear cart from local storage
+        localStorage.removeItem("guestCart");
+      }
+
+      setCart([]); // Clear cart state in context
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
+  };
 
   return (
-    <CartContext.Provider value={{ cart, setCart, removeItem, updateQuantity, fetchCart }}>
+    <CartContext.Provider
+      value={{ cart, fetchCart, removeItem, updateQuantity, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );

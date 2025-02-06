@@ -2,58 +2,20 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CheckoutForm from "@/components/CheckoutForm";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 import { saveOrderToLocalStorage } from "@/util";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
-
-
 export default function CheckoutPage() {
-  const [cartContent, setCartContents] = useState([]);
+  const { cart, updateQuantity, removeItem, fetchCart, clearCart } = useCart();
+  console.log("Cart from context:", cart);
   const [alert, setAlert] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  
+  // const router = useRouter();
 
-  const { token } = useAuth();
-
-  console.log(token);
-
- useEffect(() => {
-    if (token) {
-      fetchCart();
-    }
-  }, [token]);
-
-  async function fetchCart() {
-    try {
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch cart");
-      }
-
-      const cartData = await response.json();
-      console.log("Fetched cart:", cartData);
-      cartData.products.forEach((item) => console.log(item));
-      setCartContents(cartData.products || []); // Ensure it's an array
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const updateCart = (newCart) => {
-    setCartContents(newCart);
-    // saveCartToLocalStorage(newCart);
-  };
+   // Fetch cart on mount to ensure data is loaded
+   useEffect(() => {
+    fetchCart();
+  }, []);
 
   function handleCheckout(
     name,
@@ -65,7 +27,7 @@ export default function CheckoutPage() {
     zipcode,
     cardNumber,
     exDate,
-    cvv
+    cvv,
   ) {
     const orderDetails = {
       name,
@@ -75,30 +37,32 @@ export default function CheckoutPage() {
       city,
       state,
       zipcode,
-      cart: cartContent,
+      cart,
       paymentInfo: { cardNumber, exDate, cvv },
     };
 
     // Save to localStorage
     saveOrderToLocalStorage(orderDetails);
-    // alert(
-    //   `Checkout clicked! Thank you,
-    //     ${name}! Your order will be shipped to: ${address}. A confirmation email sent to: ${email}`
-    // );
-
+   
     // Show DaisyUI alert
     setAlert({
       type: "success",
       message: `Thank you, ${name}! Your order will be shipped to ${address}. A confirmation email has been sent to ${email}.`,
     });
-    // Clear the cart after checkout
-    updateCart([]);
-    // TODO: send to server...
+    
+    // Clear the cart (both guest & authenticated users)
+    clearCart();
+
+    // Redirect after a delay
+    // setTimeout(() => {
+    //   router.push("/order-confirmation");
+    // }, 2000);
+
   }
 
   return (
     <div className="h-screen flex flex-col text-primary">
-      <Header itemCount={cartContent.length} />
+      <Header itemCount={cart.length} />
       <div className="container mx-auto flex-grow px-4">
         <h1 className="text-5xl text-center my-8">Checkout</h1>
         {/* DaisyUI Divider */}
@@ -135,8 +99,6 @@ export default function CheckoutPage() {
 
         {/* Checkout Form Section */}
         <CheckoutForm
-          // cartContent={cartContent}
-          updateCart={updateCart}
           handleCheckout={handleCheckout}
         />
       </div>

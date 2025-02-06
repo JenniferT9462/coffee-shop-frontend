@@ -4,17 +4,17 @@ import Button from "./Button";
 
 export default function CartItem({ product, updateQuantity, removeItem }) {
    // Ensure price and quantity are valid numbers for calculations
-   const price = parseFloat(product.productId.price);
+   const price = parseFloat(product.price);
    const quantity = product.quantity;
 
   const handleIncrease = () => {
-    console.log("Increasing quantity for:", product.productId._id);
-    updateQuantity(product.productId._id, 1);
+    console.log("Increasing quantity for:", product._id);
+    updateQuantity(product._id, 1);
   };
 
   const handleDecrease = () => {
-    console.log("Decreasing quantity for:", product.productId._id);
-    updateQuantity(product.productId._id, -1);
+    console.log("Decreasing quantity for:", product._id);
+    updateQuantity(product._id, -1);
   };
 
   // Calculate the subtotal for this item (price * quantity)
@@ -24,12 +24,12 @@ export default function CartItem({ product, updateQuantity, removeItem }) {
   return (
     <div className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg">
       <img
-        src={product.productId.imageUrl}
-        alt={product.productId.name}
+        src={product.imageUrl}
+        alt={product.name}
         className="w-16 h-16 object-cover mr-4"
       />
       <div className="flex-grow">
-        <h3 className="text-lg font-medium">{product.productId.name}</h3>
+        <h3 className="text-lg font-medium">{product.name}</h3>
         <p className="text-sm text-gray-500">
           Price: ${price.toFixed(2)}
         </p>

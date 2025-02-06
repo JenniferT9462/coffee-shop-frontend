@@ -4,16 +4,18 @@ import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useFetch } from "@/hooks/api";
-// import useAuth from "@/hooks/auth";
+import { saveCartToLocalStorage, loadCartFromLocalStorage } from "@/util";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
 export default function ProductsPage() {
+  const { cart, fetchCart } = useCart();
+
   const router = useRouter();
   const { category } = router.query;
 
-  const [cartContents, setCartContents] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   console.log(category);
@@ -31,60 +33,30 @@ export default function ProductsPage() {
   // Define categories
   const categories = ["All", "Beverages", "Bakery", "Merch"];
 
-  useEffect(() => {
+  async function addProductToCart(product) {
     if (token) {
+      try {
+        await fetch(`${BACKEND_URL}/cart`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId: product._id, quantity: 1 }),
+        });
+        await fetchCart(); // Refresh cart after adding product
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+      }
+    } else {
+      // Guest user cart update
+      const updatedCart = [...cart, { ...product, quantity: 1 }];
+      localStorage.setItem("guestCart", JSON.stringify(updatedCart));
       fetchCart();
     }
-  }, [token]);
-  
-  async function fetchCart() {
-    try {
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error("Failed to fetch cart");
-      }
-  
-      const cartData = await response.json();
-      console.log("Fetched cart:", cartData);
-      setCartContents(cartData.products || []); // Ensure it's an array
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-    }
+    alert(`${product.name} Has Been Added to Your Cart!!!`);
   }
-  
-  async function addProductToCart(productId, quantity = 1) {
-    try {
-       // Optimistically update the cart state before fetching the updated cart
-    setCartContents((prevCart) => [...prevCart, { productId, quantity }]);
 
-      const response = await fetch(`${BACKEND_URL}/cart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ productId, quantity }),
-      });
-  
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to add item to cart: ${errorText}`);
-      }
-  
-      console.log("Product added successfully!");
-      await fetchCart(); // ✅ Now fetchCart is defined
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      alert(`Failed to add product to cart: ${error.message}`);
-    }
-  }
   console.log(products);
 
   // Filter products based on category
@@ -123,7 +95,8 @@ export default function ProductsPage() {
       <ProductCard
         key={product._id + idx}
         product={product}
-        onAddToCart={addToCart}
+        // onAddToCart={addToCart}
+        onAddToCart={() => addProductToCart(product)}
         onViewProduct={viewProduct}
       />
     );
@@ -131,7 +104,7 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <Header itemCount={cartContents.length} />
+      <Header itemCount={cart.length} />
       <div className="p-4">
         <h1 className="text-3xl font-semibold text-center mb-8 text-primary">
           Products Page
