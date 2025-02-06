@@ -7,25 +7,68 @@ import useAuth from "@/hooks/auth";
 import { useRouter } from "next/router";
 
 export default function EditProductPage() {
-    const router = useRouter();
-    const { id } = router.query;
-    // Get token
-    const { token } = useAuth();
+  const router = useRouter();
+  const { id } = router.query;
+  // Get token
+  const { token } = useAuth();
 
-    // onSubmit function
-    const onSubmit = (e) => {
-        e.preventDefault()
-        // See if it's working so far
-        alert("Product Updated: " + id);
+  // onSubmit function
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // See if it's working so far
+    alert("Product Updated: " + id);
 
-        // Get inputs for formData
-        const formData = new FormData();
+    // Get inputs for formData
+    // Create a FormData object
+    const formData = new FormData();
+    formData.append("name", e.target.elements.name.value);
+    formData.append("description", e.target.elements.description.value);
+    formData.append("category", e.target.elements.category.value);
+    formData.append("price", e.target.elements.price.value);
+    formData.append("stock", e.target.elements.stock.value);
+
+    // Add the image file
+    const imageFile = e.target.elements.image.files[0];
+    if (imageFile) {
+      formData.append("image", imageFile);
     }
+
     // PUT method to update backend
+    // Step 5 - Fetch Post
+    const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
+    const url = `${BACKEND_URL}/products/${id}`;
+
+    async function editProduct() {
+      const response = await fetch(url, {
+        method: "PUT",
+        body: formData,
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${token.replace(/['"]+/g, "")}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text(); // Read error response once
+        throw new Error(`Error: ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+    }
+
+    // Call postProduct
+    editProduct();
+
+    // Reset the form after submission
+    e.target.reset();
+  };
   return (
     <>
       <Header />
-      <h1 className="mt-8 text-2xl text-center text-primary">Update for product &#35; {id}</h1>
+      <h1 className="mt-8 text-2xl text-center text-primary">
+        Update for product &#35; {id}
+      </h1>
       <form
         className="card-body"
         onSubmit={onSubmit}
