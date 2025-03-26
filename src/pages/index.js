@@ -7,7 +7,7 @@ import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
 
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL_PROD;
 
 export default function Home() {
   useEffect(() => {
